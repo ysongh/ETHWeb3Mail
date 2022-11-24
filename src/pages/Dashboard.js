@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box, Snackbar, Button, IconButton, CssBaseline, Toolbar } from '@mui/material';
 
 import Navbar from '../components/dashboard/Navbar';
@@ -12,11 +13,17 @@ import Setting from '../components/dashboard/Setting';
 import CloseIcon from '@mui/icons-material/Close';
 
 function Dashboard({ tablelandMethods, tableName, walletAddress, pw3eContract, domainData, setDomainData }) {
+  const navigate = useNavigate();
+
   const [currentSection, setCurrentSection] = useState("All Mail");
   const [mailCount, setMailCount] = useState(0);
   const [currentMail, setCurrentMail] = useState({});
   const [open, setOpen] = useState(false);
 
+  useEffect(() => {
+    if(!walletAddress)  navigate('/');
+  }, [])
+  
   const openSnackbar= () => {
     setOpen(true);
   };

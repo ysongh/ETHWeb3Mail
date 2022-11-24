@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 import { Container, Card, CardContent, Divider, Button } from '@mui/material';
 import { connect } from "@tableland/sdk";
 import { ethers } from 'ethers';
