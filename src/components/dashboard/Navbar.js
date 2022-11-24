@@ -1,30 +1,18 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'
 import { AppBar, Toolbar, Chip, Button } from '@mui/material';
-import UAuth from '@uauth/js';
 
-import { UNSTOPPABLEDOMAINS_CLIENTID, UNSTOPPABLEDOMAINS_REDIRECT_URI } from '../../config';
 import { formatAddress } from "../../helpers/formatMethods";
 
 const drawerWidth = 200;
 
-const uauth = new UAuth({
-  clientID: UNSTOPPABLEDOMAINS_CLIENTID,
-  redirectUri: UNSTOPPABLEDOMAINS_REDIRECT_URI,
-});
 
 function Navbar({ tableName, walletAddress, domainData, setDomainData }) {
   const navigate = useNavigate();
 
   const logout = async () => {
-    if(domainData){
-      setDomainData(null);
-      await uauth.logout();
-    }
-    
     navigate('/');
   }
-  console.log(domainData, walletAddress)
 
   return (
     <AppBar

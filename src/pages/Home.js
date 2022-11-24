@@ -5,36 +5,16 @@ import { connect } from "@tableland/sdk";
 import { ethers } from 'ethers';
 import Web3Modal from 'web3modal';
 import LitJsSdk from 'lit-js-sdk';
-import UAuth from '@uauth/js';
-import { UNSTOPPABLEDOMAINS_CLIENTID, UNSTOPPABLEDOMAINS_REDIRECT_URI } from '../config';
 
 import PolyWeb3Mail from '../artifacts/contracts/PolyWeb3Mail.sol/PolyWeb3Mail.json';
 import Spinner from '../components/common/Spinner';
 
 const POLYWEB3MAIL_ADDRESS = "0xba542E18a9d67d015ce68c22C6b8a30698B26179";
 
-const uauth = new UAuth({
-  clientID: UNSTOPPABLEDOMAINS_CLIENTID,
-  redirectUri: UNSTOPPABLEDOMAINS_REDIRECT_URI,
-});
-
 function Home({ setTablelandMethods, setTableName, setWalletAddress, setpw3eContract, setDomainData }) {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    uauth
-      .user()
-      .then(userData => {
-        console.log(userData);
-        setDomainData(userData);
-        connectWallet();
-      })
-      .catch(error => {
-        console.error('profile error:', error);
-      })
-  }, [])
 
   const connectWallet = async () => {
     const web3Modal = new Web3Modal();
@@ -50,21 +30,6 @@ function Home({ setTablelandMethods, setTableName, setWalletAddress, setpw3eCont
     setpw3eContract(contract);
 
     connectToTableLand(contract);
-  }
-
-  const loginWithUnstoppableDomains = async () => {
-    try {
-      setLoading(true);
-      const authorization = await uauth.loginWithPopup();
-      authorization.sub = authorization.idToken.sub;
-      console.log(authorization);
-
-      setDomainData(authorization);
-      connectWallet();
-    } catch (error) {
-      setLoading(false);
-      console.error(error);
-    }
   }
 
   const connectToTableLand = async (contract) => {
@@ -124,11 +89,6 @@ function Home({ setTablelandMethods, setTableName, setWalletAddress, setpw3eCont
             {loading
               ? <Spinner />
               : <>
-                <Button variant="contained" color="secondary" onClick={loginWithUnstoppableDomains} fullWidth>
-                  Unstoppable Domain
-                </Button>
-                <br />
-                <br />
                 <Button variant="contained" color="secondary" onClick={connectWallet} fullWidth>
                   MetaMask
                 </Button>
