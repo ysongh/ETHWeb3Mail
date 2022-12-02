@@ -81,7 +81,7 @@ function Home({ setTablelandMethods, setTableName, setWalletAddress, setpw3eCont
       <Container maxWidth="sm" style={{ display: 'flex', flexDirection: 'column'}}>
         <Card style={{ marginTop: '10rem', maxWidth: '500px'}}>
           <CardContent>
-            <h1 style={{ marginBottom: '.3rem' }}>Welcome to PolyWeb3Mail</h1>
+            <h1 style={{ marginBottom: '.3rem' }}>Welcome to ETHWeb3Mail</h1>
             <p style={{ marginBottom: '1rem'}}>A decentralized and Web3 email platform</p>
 
             <Divider>Login With</Divider>
