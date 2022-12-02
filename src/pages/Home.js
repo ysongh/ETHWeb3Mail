@@ -89,7 +89,7 @@ function Home({ setTablelandMethods, setTableName, setWalletAddress, setpw3eCont
             {loading
               ? <Spinner />
               : <>
-                <Button variant="contained" color="secondary" onClick={connectWallet} fullWidth>
+                <Button variant="contained" color="primary" onClick={connectWallet} fullWidth>
                   MetaMask
                 </Button>
               </>

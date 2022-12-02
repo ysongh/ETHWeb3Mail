@@ -46,7 +46,7 @@ function Sidebar({ currentSection, setCurrentSection }) {
       </Toolbar>
       <Divider />
       <div className="primary-bg-color-100" style={{ padding: ".7rem" }}>
-        <Button variant="contained" color="secondary" size="large" fullWidth startIcon={<AddIcon />} onClick={() => setCurrentSection("Send")}>
+        <Button variant="contained" color="primary" size="large" fullWidth startIcon={<AddIcon />} onClick={() => setCurrentSection("Send")}>
           Compose
         </Button>
       </div>

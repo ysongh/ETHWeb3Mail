@@ -33,7 +33,7 @@ function Setting({ tablelandMethods, tableName, walletAddress, pw3eContract, ope
       <TextField variant="outlined" placeholder='Address'  onChange={(e) => setToAddress(e.target.value)} fullWidth />
       <br />
       <br />
-      <Button variant="contained" color="secondary" size="large" onClick={grantWriteAccesssTable}>
+      <Button variant="contained" color="primary" size="large" onClick={grantWriteAccesssTable}>
         Save
       </Button>
       <h2>Grant Permission to Email</h2>
