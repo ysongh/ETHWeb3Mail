@@ -7,7 +7,7 @@ import SkeletonPlaceholder from '../common/SkeletonPlaceholder';
 import { dataURItoBlob } from '../../helpers/convertMethods';
 import { formatAddress } from "../../helpers/formatMethods";
 
-function Mail({ tablelandMethods, tableName, setMailCount, walletAddress, setCurrentSection, setCurrentMail }) {
+function Mail({ tablelandMethods, tableName, setMailCount, walletAddress, setCurrentSection, setCurrentMail, isCopy }) {
   const [mails, setMails] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -18,7 +18,7 @@ function Mail({ tablelandMethods, tableName, setMailCount, walletAddress, setCur
   const loadMails = async () => {
     try{
       setLoading(true);
-      const readRes = await tablelandMethods.read(`SELECT * FROM ${tableName}`);
+      const readRes = await tablelandMethods.read(`SELECT * FROM ${tableName} WHERE isCopy='${isCopy}';`);
       console.warn(readRes);
 
       const entries = resultsToObjects(readRes);

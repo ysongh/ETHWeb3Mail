@@ -7,7 +7,6 @@ import Sidebar from '../components/dashboard/Sidebar';
 import Mail from '../components/dashboard/Mail';
 import Send from '../components/dashboard/Send';
 import MailDetail from '../components/dashboard/MailDetail';
-import MySendMail from '../components/dashboard/MySendMail';
 import Setting from '../components/dashboard/Setting';
 
 import CloseIcon from '@mui/icons-material/Close';
@@ -55,7 +54,8 @@ function Dashboard({ tablelandMethods, tableName, walletAddress, pw3eContract, d
             setMailCount={setMailCount}
             walletAddress={walletAddress}
             setCurrentSection={setCurrentSection}
-            setCurrentMail={setCurrentMail} /> }
+            setCurrentMail={setCurrentMail}
+            isCopy="no" /> }
         {currentSection === "Message"
           && <p>Message</p> }
         {currentSection === "Send"
@@ -75,9 +75,14 @@ function Dashboard({ tablelandMethods, tableName, walletAddress, pw3eContract, d
             openSnackbar={openSnackbar}
             setCurrentSection={setCurrentSection} /> }
         {currentSection === "My Send Mail"
-          && <MySendMail
+          && <Mail
             tablelandMethods={tablelandMethods}
-            tableName={tableName} /> }
+            tableName={tableName}
+            setMailCount={setMailCount}
+            walletAddress={walletAddress}
+            setCurrentSection={setCurrentSection}
+            setCurrentMail={setCurrentMail}
+            isCopy="yes" /> }
         {currentSection === "Setting"
           && <Setting
             tablelandMethods={tablelandMethods}
