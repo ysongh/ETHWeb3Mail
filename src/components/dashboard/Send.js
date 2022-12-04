@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Paper, Box, Tabs, Tab } from '@mui/material';
 import SendMail from './SendMail';
 import SendNFT from './SendNFT';
-import SendPOAP from './SendPOAP';
 
 function Send({ tablelandMethods, tableName, mailCount, pw3eContract, openSnackbar, walletAddress, domainData }) {
   const [currentSection, setCurrentSection] = useState("Send Mail");
@@ -31,12 +30,6 @@ function Send({ tablelandMethods, tableName, mailCount, pw3eContract, openSnackb
           domainData={domainData} /> }
       {currentSection === "Send NFT"
         && <SendNFT /> }
-      {currentSection === "Send POAP"
-        && <SendPOAP
-          tablelandMethods={tablelandMethods}
-          tableName={tableName}
-          walletAddress={walletAddress}
-          openSnackbar={openSnackbar} /> }
     </Paper>
   )
 }
