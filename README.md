@@ -1,1 +1,1 @@
-# PolyWeb3Mail
+# ETHWeb3Mail
