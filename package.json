@@ -52,5 +52,8 @@
     "dotenv": "^16.0.1",
     "hardhat": "^2.10.1",
     "react-error-overlay": "^6.0.9"
+  },
+  "resolutions": {
+    "react-error-overlay": "6.0.9"
   }
 }
