@@ -1,5 +1,6 @@
 {
   "name": "ethweb3mail",
+  "author": "ysongh",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
