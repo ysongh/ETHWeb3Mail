@@ -24,7 +24,7 @@ module.exports = {
       url: "https://api.avax-test.network/ext/bc/C/rpc",
       accounts: [process.env.PRIVATEKEY],
       chainId: 43113,
-      gasPrice: 8000000000
+      gasPrice: 25000000000
     }
   },
   // set the path to compile the contracts

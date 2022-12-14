@@ -11,8 +11,8 @@ async function main() {
   const Outbox_Moonbasealpha = "0x54148470292C24345fb828B003461a9444414517";
   const Inboxes_Fuji_Moonbasealpha = "0xb31b0a575a151E0E72D438999f5a65e08802466f";
 
-  const EVMWeb3Mail = await hre.ethers.getContractFactory(Outbox_Moonbasealpha, Inboxes_Fuji_Moonbasealpha);
-  const eVMWeb3Mail = await EVMWeb3Mail.deploy();
+  const EVMWeb3Mail = await hre.ethers.getContractFactory("EVMWeb3Mail");
+  const eVMWeb3Mail = await EVMWeb3Mail.deploy(Outbox_Moonbasealpha, Inboxes_Fuji_Moonbasealpha);
 
   await eVMWeb3Mail.deployed();
 
