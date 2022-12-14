@@ -13,6 +13,21 @@ async function main() {
   await polyWeb3Mail.deployed();
 
   console.log("PolyWeb3Mail contract deployed to:", polyWeb3Mail.address);
+
+  const Outbox_Avalanche = "0xc507A7c848b59469cC44A3653F8a582aa8BeC71E";
+  const Inboxes_Avalanche_Moonbeam = "0xb31b0a575a151E0E72D438999f5a65e08802466f";
+
+  const HyperlaneMessageReceiver = await hre.ethers.getContractFactory("HyperlaneMessageReceiver");
+  const hyperlaneMessageReceiver = await HyperlaneMessageReceiver.deploy(Outbox_Avalanche);
+
+  await hyperlaneMessageReceiver.deployed();
+
+  const HyperlaneMessageSender = await hre.ethers.getContractFactory("HyperlaneMessageSender");
+  const hyperlaneMessageSender = await HyperlaneMessageSender.deploy(Inboxes_Avalanche_Moonbeam);
+
+  await hyperlaneMessageSender.deployed();
+
+  console.log("PolyWeb3Mail contract deployed to:", polyWeb3Mail.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
