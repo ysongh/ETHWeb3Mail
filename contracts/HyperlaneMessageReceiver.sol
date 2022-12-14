@@ -9,7 +9,7 @@ import "@hyperlane-xyz/core/interfaces/IInbox.sol";
 contract HyperlaneMessageReceiver {
     IInbox inbox;
     bytes32 public lastSender;
-    string public lastMessage;
+    string[] public messages;
 
     event ReceivedMessage(uint32 origin, bytes32 sender, bytes message);
 
@@ -23,7 +23,11 @@ contract HyperlaneMessageReceiver {
         bytes calldata _message
     ) external {
       lastSender = _sender;
-      lastMessage = string(_message);
+      messages.push(string(_message));
       emit ReceivedMessage(_origin, _sender, _message);
+    }
+
+    function getMessages() external view returns (string[] memory) {
+        return messages;
     }
 }
