@@ -11,6 +11,20 @@ module.exports = {
       accounts: [process.env.PRIVATEKEY],
       chainId: 80001,
       gasPrice: 8000000000
+    },
+    // npx hardhat run scripts/deployMoonbase.js --network moonbase
+    moonbase: {
+      url: "https://rpc.api.moonbase.moonbeam.network",
+      accounts: [process.env.PRIVATEKEY],
+      chainId: 1287,
+      gasPrice: 8000000000
+    },
+    // npx hardhat run scripts/deployFuji.js --network fuji
+    fuji: {
+      url: "https://api.avax-test.network/ext/bc/C/rpc",
+      accounts: [process.env.PRIVATEKEY],
+      chainId: 43113,
+      gasPrice: 8000000000
     }
   },
   // set the path to compile the contracts
