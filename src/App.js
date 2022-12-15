@@ -9,6 +9,7 @@ function App() {
   const [walletAddress, setWalletAddress] = useState("");
   const [tablelandMethods, setTablelandMethods] = useState("");
   const [tableName, setTableName] = useState("");
+  const [chainName, setChainName] = useState('');
   const [pw3eContract, setpw3eContract] = useState(null);
   const [domainData, setDomainData] = useState('');
 
@@ -24,6 +25,7 @@ function App() {
           element={
             <Dashboard
               tableName={tableName}
+              chainName={chainName}
               tablelandMethods={tablelandMethods}
               walletAddress={walletAddress}
               pw3eContract={pw3eContract}
@@ -37,7 +39,8 @@ function App() {
               setTableName={setTableName} 
               setWalletAddress={setWalletAddress}
               setpw3eContract={setpw3eContract}
-              setDomainData={setDomainData} /> } />
+              setDomainData={setDomainData}
+              setChainName={setChainName} /> } />
       </Routes>
     </HashRouter>
   );

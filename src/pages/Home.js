@@ -6,12 +6,11 @@ import { ethers } from 'ethers';
 import Web3Modal from 'web3modal';
 import LitJsSdk from 'lit-js-sdk';
 
-import PolyWeb3Mail from '../artifacts/contracts/PolyWeb3Mail.sol/PolyWeb3Mail.json';
+import EVMWeb3Mail from '../artifacts/contracts/EVMWeb3Mail.sol/EVMWeb3Mail.json';
 import Spinner from '../components/common/Spinner';
+import {FUJI_CONTRACT, MOONBASE_CONTRACT } from '../config';
 
-const POLYWEB3MAIL_ADDRESS = "0xba542E18a9d67d015ce68c22C6b8a30698B26179";
-
-function Home({ setTablelandMethods, setTableName, setWalletAddress, setpw3eContract, setDomainData }) {
+function Home({ setTablelandMethods, setTableName, setWalletAddress, setpw3eContract, setDomainData, setChainName }) {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
@@ -26,10 +25,25 @@ function Home({ setTablelandMethods, setTableName, setWalletAddress, setpw3eCont
     const address = await signer.getAddress();
     setWalletAddress(address);
 
-    let contract = new ethers.Contract(POLYWEB3MAIL_ADDRESS, PolyWeb3Mail.abi, signer);
-    setpw3eContract(contract);
+    const { chainId } = await provider.getNetwork();
+    console.log(chainId);
 
-    connectToTableLand(contract);
+    if(chainId === 43113){
+      const contract = new ethers.Contract(FUJI_CONTRACT, EVMWeb3Mail.abi, signer);
+      console.log(contract);
+      setChainName("Avalanche");
+      setpw3eContract(contract);
+    }
+    else if(chainId === 1287){
+      const contract = new ethers.Contract(MOONBASE_CONTRACT, EVMWeb3Mail.abi, signer);
+      console.log(contract);
+      setChainName("Moonbase");
+      setpw3eContract(contract);
+    }
+    
+    navigate('./dashboard');
+
+    //connectToTableLand(contract);
   }
 
   const connectToTableLand = async (contract) => {

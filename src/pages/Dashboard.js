@@ -11,7 +11,7 @@ import Setting from '../components/dashboard/Setting';
 
 import CloseIcon from '@mui/icons-material/Close';
 
-function Dashboard({ tablelandMethods, tableName, walletAddress, pw3eContract, domainData, setDomainData }) {
+function Dashboard({ tablelandMethods, tableName, walletAddress, pw3eContract, domainData, chainName, setDomainData }) {
   const navigate = useNavigate();
 
   const [currentSection, setCurrentSection] = useState("All Mail");
@@ -53,6 +53,7 @@ function Dashboard({ tablelandMethods, tableName, walletAddress, pw3eContract, d
             tableName={tableName}
             setMailCount={setMailCount}
             walletAddress={walletAddress}
+            pw3eContract={pw3eContract}
             setCurrentSection={setCurrentSection}
             setCurrentMail={setCurrentMail}
             isCopy="no" /> }
@@ -63,6 +64,7 @@ function Dashboard({ tablelandMethods, tableName, walletAddress, pw3eContract, d
             tablelandMethods={tablelandMethods}
             tableName={tableName}
             mailCount={mailCount}
+            chainName={chainName}
             pw3eContract={pw3eContract}
             walletAddress={walletAddress}
             domainData={domainData}

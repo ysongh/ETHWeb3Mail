@@ -30,14 +30,14 @@ function MailDetail({ currentMail, tableName, tablelandMethods, openSnackbar, se
       <Paper style={{ padding: "1rem" }}>
         <div style={{ display: 'flex', justifyContent: "space-between" }}>
           <div>
-            <h1 style={{ margin: "0"}}>{currentMail.data.subject}</h1>
-            <p style={{ marginTop: "0", color: "gray", fontSize: ".8rem"}}>From: {currentMail.recipient}</p>
+            <h1 style={{ margin: "0"}}>Test</h1>
+            {/* <p style={{ marginTop: "0", color: "gray", fontSize: ".8rem"}}>From: {currentMail.recipient}</p> */}
           </div>
          
-          <p>{currentMail.dateSent}</p>
+          {/* <p>{currentMail.dateSent}</p> */}
         </div>
         
-        <p>{currentMail.data.text}</p>
+        <p>{currentMail}</p>
       </Paper>
     </>
     

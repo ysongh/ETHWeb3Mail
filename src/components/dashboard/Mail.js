@@ -7,7 +7,7 @@ import SkeletonPlaceholder from '../common/SkeletonPlaceholder';
 import { dataURItoBlob } from '../../helpers/convertMethods';
 import { formatAddress } from "../../helpers/formatMethods";
 
-function Mail({ tablelandMethods, tableName, setMailCount, walletAddress, setCurrentSection, setCurrentMail, isCopy }) {
+function Mail({ tablelandMethods, tableName, setMailCount, pw3eContract,  walletAddress, setCurrentSection, setCurrentMail, isCopy }) {
   const [mails, setMails] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -18,21 +18,24 @@ function Mail({ tablelandMethods, tableName, setMailCount, walletAddress, setCur
   const loadMails = async () => {
     try{
       setLoading(true);
-      const readRes = await tablelandMethods.read(`SELECT * FROM ${tableName} WHERE isCopy='${isCopy}';`);
-      console.warn(readRes);
+      // const readRes = await tablelandMethods.read(`SELECT * FROM ${tableName} WHERE isCopy='${isCopy}';`);
+      // console.warn(readRes);
 
-      const entries = resultsToObjects(readRes);
-      let temp = [];
+      // const entries = resultsToObjects(readRes);
+      // let temp = [];
 
-      for (const { recipient, body, id, dateSent } of entries) {
-        console.log(`${body}: ${id}`);
-        const strData = await messageToDecrypt(body);
-        const toObject = await JSON.parse(strData);
-        temp.unshift({ id, data: toObject, recipient, dateSent});
-      }
+      // for (const { recipient, body, id, dateSent } of entries) {
+      //   console.log(`${body}: ${id}`);
+      //   const strData = await messageToDecrypt(body);
+      //   const toObject = await JSON.parse(strData);
+      //   temp.unshift({ id, data: toObject, recipient, dateSent});
+      // }
 
-      setMails(temp);
-      setMailCount(temp.length);
+      // setMails(temp);
+      // setMailCount(temp.length);
+      
+      const newMails = await pw3eContract.getMessages();
+      setMails(newMails);
       setLoading(false);
     } catch(error) {
       console.error(error);
@@ -107,10 +110,10 @@ function Mail({ tablelandMethods, tableName, setMailCount, walletAddress, setCur
               <Paper key={m.id} style={{ display: 'flex', justifyContent: "space-between" ,padding: '0 1rem', marginBottom: '1rem', cursor: "pointer" }} onClick={() => selectMail(m)}>
                 <div style={{ display: 'flex' }}>
                   <Checkbox />
-                  <p style={{ color: 'grey', marginRight: '.5rem' }}>{formatAddress(m.recipient)} - </p>
-                  <p>{m.data.subject}</p>
+                  {/* <p style={{ color: 'grey', marginRight: '.5rem' }}>{formatAddress(m.recipient)} - </p> */}
+                  <p>{m}</p>
                 </div>
-                <p>{m.dateSent}</p>
+                {/* <p>{m.dateSent}</p> */}
               </Paper>
       )) : <Typography variant="h3">No Mail Yet...</Typography>
     }
