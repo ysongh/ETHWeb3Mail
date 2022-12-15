@@ -37,6 +37,7 @@ function Dashboard({ tablelandMethods, tableName, walletAddress, pw3eContract, d
       <Navbar
         tableName={tableName}
         walletAddress={walletAddress}
+        chainName={chainName}
         domainData={domainData}
         setDomainData={setDomainData} />
       <Sidebar currentSection={currentSection} setCurrentSection={setCurrentSection} />

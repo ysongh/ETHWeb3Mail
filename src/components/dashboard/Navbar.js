@@ -7,7 +7,7 @@ import { formatAddress } from "../../helpers/formatMethods";
 const drawerWidth = 200;
 
 
-function Navbar({ tableName, walletAddress, domainData, setDomainData }) {
+function Navbar({ tableName, walletAddress, chainName, domainData, setDomainData }) {
   const navigate = useNavigate();
 
   const logout = async () => {
@@ -22,9 +22,14 @@ function Navbar({ tableName, walletAddress, domainData, setDomainData }) {
       sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
     >
       <Toolbar style={{ display: 'flex', justifyContent: 'space-between'}}>
-        <Chip
-          className='primary-bg-color-100'
-          label={formatAddress(domainData?.sub.length > 0 ? domainData?.sub : walletAddress)} />
+        <div>
+          <Chip
+            className='primary-bg-color-100'
+            label={formatAddress(domainData?.sub.length > 0 ? domainData?.sub : walletAddress)} />
+          <Chip
+             className='primary-bg-color-100'
+            label={chainName} />
+        </div>
         <div style={{ display: 'flex', alignItems: 'center'}}>
           <Button variant="contained" color="error" onClick={logout}>
             Logout
