@@ -7,7 +7,6 @@ import Sidebar from '../components/dashboard/Sidebar';
 import Mail from '../components/dashboard/Mail';
 import Send from '../components/dashboard/Send';
 import MailDetail from '../components/dashboard/MailDetail';
-import Setting from '../components/dashboard/Setting';
 
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -87,12 +86,7 @@ function Dashboard({ tablelandMethods, tableName, walletAddress, pw3eContract, d
             setCurrentMail={setCurrentMail}
             isCopy="yes" /> }
         {currentSection === "Setting"
-          && <Setting
-            tablelandMethods={tablelandMethods}
-            tableName={tableName}
-            walletAddress={walletAddress}
-            pw3eContract={pw3eContract}
-            openSnackbar={openSnackbar} /> }
+          && <h1>Setting</h1> }
       </Box>
       <Snackbar
         open={open}
