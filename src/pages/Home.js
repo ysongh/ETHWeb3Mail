@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Card, CardContent, Divider, Button } from '@mui/material';
-import { connect } from "@tableland/sdk";
 import { ethers } from 'ethers';
 import Web3Modal from 'web3modal';
 import LitJsSdk from 'lit-js-sdk';
@@ -43,39 +42,6 @@ function Home({ setTablelandMethods, setTableName, setWalletAddress, setpw3eCont
     
     navigate('./dashboard');
 
-    //connectToTableLand(contract);
-  }
-
-  const connectToTableLand = async (contract) => {
-    try{
-      setLoading(true);
-      const tableland = await connect({ chain: 'polygon-mumbai' });
-      setTablelandMethods(tableland);
-
-      const tables = await tableland.list();
-      console.log(tables);
-      if(tables.length){
-        setTableName(tables[0].name);
-      }
-      else {
-        const { name } = await tableland.create(
-          `body text, recipient text, dateSent text, isCopy text, id text, primary key (id)`, // Table schema definition
-          `myEmail` // Optional `prefix` used to define a human-readable string
-        );
-    
-        console.log(name);
-        setTableName(name);
-        const transaction = await contract.setTablename(name);
-        const tx = await transaction.wait();
-        console.log(tx);
-      }
-      await connectToLitNetwork();
-      setLoading(false);
-      navigate('./dashboard');
-    } catch (error) {
-      setLoading(false);
-      console.error(error);
-    } 
   }
 
   const connectToLitNetwork = async () => {

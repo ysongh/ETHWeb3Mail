@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Paper, Typography, Checkbox } from '@mui/material';
-import { resultsToObjects } from "@tableland/sdk";
 import LitJsSdk from 'lit-js-sdk';
 
 import SkeletonPlaceholder from '../common/SkeletonPlaceholder';

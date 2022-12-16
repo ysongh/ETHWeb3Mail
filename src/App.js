@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { HashRouter, Route, Routes } from 'react-router-dom';
 
-import TableLand from './components/TableLand';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 
@@ -16,10 +15,6 @@ function App() {
   return (
     <HashRouter>
       <Routes>
-        <Route
-          path="/test"
-          element={
-            <TableLand /> } />
         <Route
           path="/dashboard"
           element={
