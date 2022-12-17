@@ -5,7 +5,7 @@ require('dotenv').config();
 module.exports = {
   solidity: "0.8.9",
   networks: {
-    // npx hardhat run scripts/deploy.js --network mumbai
+    // npx hardhat run scripts/deployMumbai.js --network mumbai
     mumbai: {
       url: `https://polygon-mumbai.g.alchemy.com/v2/${process.env.ALCHEMYAPI_KEY}`,
       accounts: [process.env.PRIVATEKEY],
