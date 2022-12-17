@@ -10,9 +10,10 @@ async function main() {
   // For Fuji
   const Outbox_Fuji = "0xc507A7c848b59469cC44A3653F8a582aa8BeC71E";
   const Inboxes_Moonbasealpha_Fuji = "0x1D5EbC3e15e9ECDe0e3530C85899556797eeaea5";
+  const Inboxes_Mumbai_Fuji = "0x56c09458cC7863fff1Cc6Bcb6652Dcc3412FcA86";
 
   const EVMWeb3Mail = await hre.ethers.getContractFactory("EVMWeb3Mail");
-  const eVMWeb3Mail = await EVMWeb3Mail.deploy(Outbox_Fuji, Inboxes_Moonbasealpha_Fuji);
+  const eVMWeb3Mail = await EVMWeb3Mail.deploy(Outbox_Fuji, Inboxes_Mumbai_Fuji);
 
   await eVMWeb3Mail.deployed();
 
