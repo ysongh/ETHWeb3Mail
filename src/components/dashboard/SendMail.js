@@ -3,7 +3,6 @@ import { TextField, Button, LinearProgress } from '@mui/material';
 import { NFTStorage, File } from 'nft.storage';
 import LitJsSdk from 'lit-js-sdk';
 import { ethers } from 'ethers';
-import { v4 as uuidv4 } from 'uuid';
 
 import { NFT_STORAGE_APIKEY } from '../../config';
 import { blobToDataURI } from '../../helpers/convertMethods';
