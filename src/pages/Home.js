@@ -7,7 +7,7 @@ import LitJsSdk from 'lit-js-sdk';
 
 import EVMWeb3Mail from '../artifacts/contracts/EVMWeb3Mail.sol/EVMWeb3Mail.json';
 import Spinner from '../components/common/Spinner';
-import {FUJI_CONTRACT, MOONBASE_CONTRACT } from '../config';
+import {FUJI_CONTRACT, MUMBAI_CONTRACT, MOONBASE_CONTRACT } from '../config';
 
 function Home({ setTablelandMethods, setTableName, setWalletAddress, setpw3eContract, setDomainData, setChainName }) {
   const navigate = useNavigate();
@@ -30,18 +30,24 @@ function Home({ setTablelandMethods, setTableName, setWalletAddress, setpw3eCont
     if(chainId === 43113){
       const contract = new ethers.Contract(FUJI_CONTRACT, EVMWeb3Mail.abi, signer);
       console.log(contract);
-      setChainName("Avalanche");
+      setChainName("fuji");
       setpw3eContract(contract);
     }
     else if(chainId === 1287){
       const contract = new ethers.Contract(MOONBASE_CONTRACT, EVMWeb3Mail.abi, signer);
       console.log(contract);
-      setChainName("Moonbase");
+      setChainName("moonbase");
+      setpw3eContract(contract);
+    }
+    else if(chainId === 80001){
+      const contract = new ethers.Contract(MUMBAI_CONTRACT, EVMWeb3Mail.abi, signer);
+      console.log(contract);
+      setChainName("mumbai");
       setpw3eContract(contract);
     }
     
+    await connectToLitNetwork();
     navigate('./dashboard');
-
   }
 
   const connectToLitNetwork = async () => {
