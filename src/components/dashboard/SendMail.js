@@ -75,16 +75,25 @@ function SendMail({ tablelandMethods, tableName, openSnackbar, chainName,pw3eCon
 
       let destinationDomain;
       let recipient;
+      let chainId;
       if (chainName === 'fuji') {
         destinationDomain = '80001';
         recipient = MUMBAI_CONTRACT.slice(2);
         recipient = "0x000000000000000000000000" + recipient;
+        chainId = "OxA869";
       }
       else {
         destinationDomain = '43113';
         recipient = FUJI_CONTRACT.slice(2);
-        recipient = "0x000000000000000000000000" + recipient;;
+        recipient = "0x000000000000000000000000" + recipient;
+        chainId = "0x13881";
       }
+
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: chainId }]
+      });
+
       const transaction = await pw3eContract.sendString(destinationDomain, recipient, cid);
       const tx = await transaction.wait();
       console.log(tx);
