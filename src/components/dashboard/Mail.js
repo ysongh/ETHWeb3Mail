@@ -34,7 +34,13 @@ function Mail({ tablelandMethods, tableName, setMailCount, pw3eContract,  wallet
       // setMailCount(temp.length);
       
       const newMails = await pw3eContract.getMessages();
-      setMails(newMails);
+      const decryptedMails = [];
+      for(let m of newMails) {
+        const strData = await messageToDecrypt(m);
+        const toObject = await JSON.parse(strData);
+        decryptedMails.push(toObject);
+      }
+      setMails(decryptedMails);
       setLoading(false);
     } catch(error) {
       console.error(error);
@@ -110,9 +116,9 @@ function Mail({ tablelandMethods, tableName, setMailCount, pw3eContract,  wallet
                 <div style={{ display: 'flex' }}>
                   <Checkbox />
                   {/* <p style={{ color: 'grey', marginRight: '.5rem' }}>{formatAddress(m.recipient)} - </p> */}
-                  <p>{m}</p>
+                  <p>{m.subject}</p>
                 </div>
-                {/* <p>{m.dateSent}</p> */}
+                <p>{m.dateNow}</p>
               </Paper>
       )) : <Typography variant="h3">No Mail Yet...</Typography>
     }
