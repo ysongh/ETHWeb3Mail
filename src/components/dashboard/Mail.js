@@ -6,7 +6,7 @@ import SkeletonPlaceholder from '../common/SkeletonPlaceholder';
 import { dataURItoBlob } from '../../helpers/convertMethods';
 import { formatAddress } from "../../helpers/formatMethods";
 
-function Mail({ tablelandMethods, tableName, setMailCount, pw3eContract,  walletAddress, setCurrentSection, setCurrentMail, isCopy }) {
+function Mail({ tablelandMethods, tableName, setMailCount, chainName, pw3eContract,  walletAddress, setCurrentSection, setCurrentMail, isCopy }) {
   const [mails, setMails] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -52,7 +52,7 @@ function Mail({ tablelandMethods, tableName, setMailCount, pw3eContract,  wallet
   const messageToDecrypt = async (cid) => {
     console.warn(cid);
     try{
-      const chain = 'mumbai';
+      const chain = chainName === 'fuji' ? 'fuji': 'mumbai';
       const authSig = await LitJsSdk.checkAndSignAuthMessage({chain});
       const accessControlConditions = [
         {

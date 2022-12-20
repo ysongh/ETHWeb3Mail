@@ -51,6 +51,7 @@ function Dashboard({ tablelandMethods, tableName, walletAddress, pw3eContract, d
           && <Mail
             tablelandMethods={tablelandMethods}
             tableName={tableName}
+            chainName={chainName}
             setMailCount={setMailCount}
             walletAddress={walletAddress}
             pw3eContract={pw3eContract}
