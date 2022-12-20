@@ -19,7 +19,7 @@ contract EVMWeb3Mail {
         inbox = IInbox(_inbox);
     }
 
-    function sendString(
+    function sendMail(
         uint32 _destinationDomain,
         bytes32 _recipient,
         string calldata _message
