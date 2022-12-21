@@ -9,7 +9,7 @@ import EVMWeb3Mail from '../artifacts/contracts/EVMWeb3Mail.sol/EVMWeb3Mail.json
 import Spinner from '../components/common/Spinner';
 import {FUJI_CONTRACT, MUMBAI_CONTRACT, MOONBASE_CONTRACT } from '../config';
 
-function Home({ setTablelandMethods, setTableName, setWalletAddress, setpw3eContract, setDomainData, setChainName }) {
+function Home({ setWalletAddress, setpw3eContract, setChainName }) {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);

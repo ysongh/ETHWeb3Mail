@@ -10,7 +10,7 @@ import MailDetail from '../components/dashboard/MailDetail';
 
 import CloseIcon from '@mui/icons-material/Close';
 
-function Dashboard({ tablelandMethods, tableName, walletAddress, pw3eContract, domainData, chainName, setDomainData }) {
+function Dashboard({ walletAddress, pw3eContract, chainName }) {
   const navigate = useNavigate();
 
   const [currentSection, setCurrentSection] = useState("All Mail");
@@ -34,11 +34,8 @@ function Dashboard({ tablelandMethods, tableName, walletAddress, pw3eContract, d
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <Navbar
-        tableName={tableName}
         walletAddress={walletAddress}
-        chainName={chainName}
-        domainData={domainData}
-        setDomainData={setDomainData} />
+        chainName={chainName} />
       <Sidebar currentSection={currentSection} setCurrentSection={setCurrentSection} />
       <Box
         className="primary-bg-color-200"
@@ -49,8 +46,6 @@ function Dashboard({ tablelandMethods, tableName, walletAddress, pw3eContract, d
         <Toolbar />
         {currentSection === "All Mail"
           && <Mail
-            tablelandMethods={tablelandMethods}
-            tableName={tableName}
             chainName={chainName}
             setMailCount={setMailCount}
             walletAddress={walletAddress}
@@ -62,25 +57,18 @@ function Dashboard({ tablelandMethods, tableName, walletAddress, pw3eContract, d
           && <p>Message</p> }
         {currentSection === "Send"
           && <Send
-            tablelandMethods={tablelandMethods}
-            tableName={tableName}
             mailCount={mailCount}
             chainName={chainName}
             pw3eContract={pw3eContract}
             walletAddress={walletAddress}
-            domainData={domainData}
             openSnackbar={openSnackbar} /> }
         {currentSection === "Mail Detail"
           && <MailDetail
             currentMail={currentMail}
-            tableName={tableName}
-            tablelandMethods={tablelandMethods}
             openSnackbar={openSnackbar}
             setCurrentSection={setCurrentSection} /> }
         {currentSection === "My Send Mail"
           && <Mail
-            tablelandMethods={tablelandMethods}
-            tableName={tableName}
             setMailCount={setMailCount}
             walletAddress={walletAddress}
             setCurrentSection={setCurrentSection}
