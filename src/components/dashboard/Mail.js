@@ -33,7 +33,7 @@ function Mail({  chainName, pw3eContract,  walletAddress, setCurrentSection, set
       // setMails(temp);
       // setMailCount(temp.length);
       
-      const newMails = await pw3eContract.getMessages();
+      const newMails = await pw3eContract.getUserEmails(walletAddress);
       const decryptedMails = [];
       for(let m of newMails) {
         const strData = await messageToDecrypt(m);

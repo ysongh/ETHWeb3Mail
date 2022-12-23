@@ -94,7 +94,7 @@ function SendMail({ tablelandMethods, tableName, openSnackbar, chainName,pw3eCon
         params: [{ chainId: chainId }]
       });
 
-      const transaction = await pw3eContract.sendString(destinationDomain, recipient, cid);
+      const transaction = await pw3eContract.sendMail(destinationDomain, recipient, cid, to);
       const tx = await transaction.wait();
       console.log(tx);
       setTransaction(tx.hash);
