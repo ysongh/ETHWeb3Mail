@@ -7,14 +7,12 @@
 const hre = require("hardhat");
 
 async function main() {
-  // For Fuji
-  const Outbox_Fuji = "0xc507A7c848b59469cC44A3653F8a582aa8BeC71E";
-  const Inboxes_Moonbasealpha_Fuji = "0x1D5EbC3e15e9ECDe0e3530C85899556797eeaea5";
-  const Inboxes_Mumbai_Fuji = "0x56c09458cC7863fff1Cc6Bcb6652Dcc3412FcA86";
-  const Inboxes_Goerli_Fuji = "0xfc8d0D2E15A36f1A3F3aE3Cb127B706c1f23Aadc";
+  // For Goerli
+  const Outbox_Goerli = "0xDDcFEcF17586D08A5740B7D91735fcCE3dfe3eeD";
+  const Inboxes_Fuji_Goerli = "0xa5D5EdF366F0D8FF135EBb31555E10b07f096427";
 
   const EVMWeb3Mail = await hre.ethers.getContractFactory("EVMWeb3Mail");
-  const eVMWeb3Mail = await EVMWeb3Mail.deploy(Outbox_Fuji, Inboxes_Goerli_Fuji);
+  const eVMWeb3Mail = await EVMWeb3Mail.deploy(Outbox_Goerli, Inboxes_Fuji_Goerli);
 
   await eVMWeb3Mail.deployed();
 
