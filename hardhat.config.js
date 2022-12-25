@@ -25,6 +25,13 @@ module.exports = {
       accounts: [process.env.PRIVATEKEY],
       chainId: 43113,
       gasPrice: 25000000000
+    },
+    // npx hardhat run scripts/deployGoerli.js --network goerli
+    goerli: {
+      url: `https://eth-goerli.g.alchemy.com/v2/${process.env.ALCHEMYAPI_KEY}`,
+      accounts: [process.env.PRIVATEKEY],
+      chainId: 5,
+      gasPrice: 8000000000
     }
   },
   // set the path to compile the contracts

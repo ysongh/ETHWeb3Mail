@@ -16,7 +16,7 @@ async function main() {
 
   await eVMWeb3Mail.deployed();
 
-  console.log("Fuji EVMWeb3Mail contract deployed to:", eVMWeb3Mail.address);
+  console.log("Goerli EVMWeb3Mail contract deployed to:", eVMWeb3Mail.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
