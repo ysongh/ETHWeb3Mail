@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import { TextField, Button, LinearProgress } from '@mui/material';
-import { NFTStorage, File } from 'nft.storage';
 import LitJsSdk from 'lit-js-sdk';
 import { ethers } from 'ethers';
+import axios from "axios";
 
-import { NFT_STORAGE_APIKEY } from '../../config';
 import { blobToDataURI } from '../../helpers/convertMethods';
-import {FUJI_CONTRACT, MUMBAI_CONTRACT } from '../../config';
-
-const client = new NFTStorage({ token: NFT_STORAGE_APIKEY });
+import { FUJI_CONTRACT, MUMBAI_CONTRACT, PINATA_APIKEY, PINATA_SECRETAPIKEY } from '../../config';
 
 function SendMail({ tablelandMethods, tableName, openSnackbar, chainName,pw3eContract, walletAddress, domainData }) {
   const [to, setTo] = useState("");
@@ -61,17 +58,27 @@ function SendMail({ tablelandMethods, tableName, openSnackbar, chainName,pw3eCon
       console.warn("encryptedString:", encryptedString);
 
       const prepareToUpload = new File(
-        [JSON.stringify(
-          {
-            encryptedSymmetricKey: Array.from(encryptedSymmetricKey),   // Convert Unit8Array to Array
-            encryptedString: await blobToDataURI(encryptedString)
-          },
-          null,
-          2
-        )], 'metadata.json');
+      [JSON.stringify(
+        {
+          encryptedSymmetricKey: Array.from(encryptedSymmetricKey),   // Convert Unit8Array to Array
+          encryptedString: await blobToDataURI(encryptedString)
+        },
+        null,
+        2
+      )], 'metadata.json');
 
-      const cid = await client.storeDirectory([prepareToUpload]);
-      console.log(cid);
+      let data = new FormData();
+      data.append('file', prepareToUpload);
+      const res = await axios.post("https://api.pinata.cloud/pinning/pinFileToIPFS", data, {
+        maxContentLength: "Infinity",
+        headers: {
+          "Content-Type": 'multipart/form-data',
+          pinata_api_key: PINATA_APIKEY, 
+          pinata_secret_api_key: PINATA_SECRETAPIKEY,
+        }
+      })
+      let url = "https://gateway.pinata.cloud/ipfs/" + res.data.IpfsHash;
+      console.log(url);
 
       let destinationDomain;
       let recipient;
@@ -94,7 +101,7 @@ function SendMail({ tablelandMethods, tableName, openSnackbar, chainName,pw3eCon
         params: [{ chainId: chainId }]
       });
 
-      const transaction = await pw3eContract.sendMail(destinationDomain, recipient, cid, to);
+      const transaction = await pw3eContract.sendMail(destinationDomain, recipient, url, to);
       const tx = await transaction.wait();
       console.log(tx);
       setTransaction(tx.hash);

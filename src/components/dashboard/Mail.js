@@ -49,8 +49,8 @@ function Mail({  chainName, pw3eContract,  walletAddress, setCurrentSection, set
     
   }
 
-  const messageToDecrypt = async (cid) => {
-    console.warn(cid);
+  const messageToDecrypt = async (url) => {
+    console.warn(url);
     try{
       const chain = chainName === 'fuji' ? 'fuji': 'mumbai';
       const authSig = await LitJsSdk.checkAndSignAuthMessage({chain});
@@ -70,7 +70,7 @@ function Mail({  chainName, pw3eContract,  walletAddress, setCurrentSection, set
         }
       ]
 
-      let data = await fetch(`https://${cid}.ipfs.dweb.link/metadata.json`);
+      let data = await fetch(url);
       data = await data.json();
       console.log(data);
 
