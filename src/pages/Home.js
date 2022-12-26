@@ -7,7 +7,7 @@ import LitJsSdk from 'lit-js-sdk';
 
 import EVMWeb3Mail from '../artifacts/contracts/EVMWeb3Mail.sol/EVMWeb3Mail.json';
 import Spinner from '../components/common/Spinner';
-import {FUJI_CONTRACT, MUMBAI_CONTRACT, MOONBASE_CONTRACT } from '../config';
+import {FUJI_CONTRACT, MUMBAI_CONTRACT, MOONBASE_CONTRACT, GOERLI_CONTRACT } from '../config';
 
 function Home({ setWalletAddress, setpw3eContract, setChainName }) {
   const navigate = useNavigate();
@@ -43,6 +43,12 @@ function Home({ setWalletAddress, setpw3eContract, setChainName }) {
       const contract = new ethers.Contract(MUMBAI_CONTRACT, EVMWeb3Mail.abi, signer);
       console.log(contract);
       setChainName("mumbai");
+      setpw3eContract(contract);
+    }
+    else if(chainId === 5){
+      const contract = new ethers.Contract(GOERLI_CONTRACT, EVMWeb3Mail.abi, signer);
+      console.log(contract);
+      setChainName("goerli");
       setpw3eContract(contract);
     }
     
