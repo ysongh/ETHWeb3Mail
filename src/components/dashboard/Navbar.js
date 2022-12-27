@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { AppBar, Toolbar, Chip, Button } from '@mui/material';
 
@@ -7,7 +7,7 @@ import { formatAddress } from "../../helpers/formatMethods";
 const drawerWidth = 200;
 
 
-function Navbar({ tableName, walletAddress, chainName, domainData, setDomainData }) {
+function Navbar({ walletAddress, chainName, domainData }) {
   const navigate = useNavigate();
 
   const logout = async () => {

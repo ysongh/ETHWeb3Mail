@@ -7,7 +7,7 @@ import axios from "axios";
 import { blobToDataURI } from '../../helpers/convertMethods';
 import { FUJI_CONTRACT, MUMBAI_CONTRACT, PINATA_APIKEY, PINATA_SECRETAPIKEY } from '../../config';
 
-function SendMail({ tablelandMethods, tableName, openSnackbar, chainName,pw3eContract, walletAddress, domainData }) {
+function SendMail({  openSnackbar, chainName, ethProvider, pw3eContract, walletAddress, domainData }) {
   const [to, setTo] = useState("");
   const [subject, setSubject] = useState(false);
   const [text, setText] = useState(false);
@@ -17,7 +17,14 @@ function SendMail({ tablelandMethods, tableName, openSnackbar, chainName,pw3eCon
   const sendMail = async () => {
     try{
       setLoading(true);
-     
+      let toaddress;
+
+      if(to[0] !== '0'){
+        toaddress = await ethProvider.resolveName(to);
+      }
+
+      if(toaddress === null) return;
+
       const chain = chainName === 'fuji' ? 'mumbai': 'fuji';
       const authSig = await LitJsSdk.checkAndSignAuthMessage({chain});
       const accessControlConditions = [
@@ -31,7 +38,7 @@ function SendMail({ tablelandMethods, tableName, openSnackbar, chainName,pw3eCon
           ],
           returnValueTest: {
             comparator: '=',
-            value: to
+            value: toaddress
           }
         }
       ]
@@ -101,7 +108,7 @@ function SendMail({ tablelandMethods, tableName, openSnackbar, chainName,pw3eCon
         params: [{ chainId: chainId }]
       });
 
-      const transaction = await pw3eContract.sendMail(destinationDomain, recipient, url, to);
+      const transaction = await pw3eContract.sendMail(destinationDomain, recipient, url, toaddress);
       const tx = await transaction.wait();
       console.log(tx);
       setTransaction(tx.hash);

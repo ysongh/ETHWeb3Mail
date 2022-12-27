@@ -10,7 +10,7 @@ import MailDetail from '../components/dashboard/MailDetail';
 
 import CloseIcon from '@mui/icons-material/Close';
 
-function Dashboard({ walletAddress, pw3eContract, chainName }) {
+function Dashboard({ walletAddress, pw3eContract, chainName, ethProvider }) {
   const navigate = useNavigate();
 
   const [currentSection, setCurrentSection] = useState("All Mail");
@@ -61,7 +61,9 @@ function Dashboard({ walletAddress, pw3eContract, chainName }) {
             chainName={chainName}
             pw3eContract={pw3eContract}
             walletAddress={walletAddress}
-            openSnackbar={openSnackbar} /> }
+            ethProvider={ethProvider}
+            openSnackbar={openSnackbar}
+             /> }
         {currentSection === "Mail Detail"
           && <MailDetail
             currentMail={currentMail}
