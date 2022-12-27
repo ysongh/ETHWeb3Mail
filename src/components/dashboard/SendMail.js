@@ -94,7 +94,7 @@ function SendMail({  openSnackbar, chainName, ethProvider, pw3eContract, walletA
         destinationDomain = '80001';
         recipient = MUMBAI_CONTRACT.slice(2);
         recipient = "0x000000000000000000000000" + recipient;
-        chainId = "OxA869";
+        chainId = "0xA869";
       }
       else {
         destinationDomain = '43113';
