@@ -25,8 +25,29 @@ function SendMail({  openSnackbar, chainName, ethProvider, pw3eContract, walletA
       }
 
       if(toaddress === null) return;
+      if(chain === "") return;
 
-      const chain = chainName === 'fuji' ? 'mumbai': 'fuji';
+      let destinationDomain;
+      let recipient;
+      let chainId;
+      if (chain === 'fuji') {
+        destinationDomain = '80001';
+        recipient = MUMBAI_CONTRACT.slice(2);
+        recipient = "0x000000000000000000000000" + recipient;
+      }
+      else if (chain === 'mumbai') {
+        destinationDomain = '43113';
+        recipient = FUJI_CONTRACT.slice(2);
+        recipient = "0x000000000000000000000000" + recipient;
+      }
+
+      if (chainName === 'fuji') {
+        chainId = "0xA869";
+      }
+      else if (chainName === 'mumbai') {
+        chainId = "0x13881";
+      }
+
       const authSig = await LitJsSdk.checkAndSignAuthMessage({chain});
       const accessControlConditions = [
         {
@@ -87,22 +108,6 @@ function SendMail({  openSnackbar, chainName, ethProvider, pw3eContract, walletA
       })
       let url = "https://gateway.pinata.cloud/ipfs/" + res.data.IpfsHash;
       console.log(url);
-
-      let destinationDomain;
-      let recipient;
-      let chainId;
-      if (chainName === 'fuji') {
-        destinationDomain = '80001';
-        recipient = MUMBAI_CONTRACT.slice(2);
-        recipient = "0x000000000000000000000000" + recipient;
-        chainId = "0xA869";
-      }
-      else {
-        destinationDomain = '43113';
-        recipient = FUJI_CONTRACT.slice(2);
-        recipient = "0x000000000000000000000000" + recipient;
-        chainId = "0x13881";
-      }
 
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
