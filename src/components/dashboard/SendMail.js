@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button, LinearProgress } from '@mui/material';
+import { FormControl, InputLabel, Select, MenuItem, TextField, Button, LinearProgress } from '@mui/material';
 import LitJsSdk from 'lit-js-sdk';
 import { ethers } from 'ethers';
 import axios from "axios";
@@ -8,6 +8,7 @@ import { blobToDataURI } from '../../helpers/convertMethods';
 import { FUJI_CONTRACT, MUMBAI_CONTRACT, PINATA_APIKEY, PINATA_SECRETAPIKEY } from '../../config';
 
 function SendMail({  openSnackbar, chainName, ethProvider, pw3eContract, walletAddress, domainData }) {
+  const [chain, setChain] = useState("");
   const [to, setTo] = useState("");
   const [subject, setSubject] = useState(false);
   const [text, setText] = useState(false);
@@ -122,7 +123,22 @@ function SendMail({  openSnackbar, chainName, ethProvider, pw3eContract, walletA
   
   return (
     <div>
-      <TextField variant="standard" placeholder='To'  onChange={(e) => setTo(e.target.value)} fullWidth />
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <TextField variant="standard" placeholder='To'  onChange={(e) => setTo(e.target.value)} fullWidth />
+        <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+          <Select
+            label="Chain"
+            onChange={(e) => setChain(e.target.value)}
+          >
+            <MenuItem disabled value="">
+              <em>Select Chain</em>
+            </MenuItem>
+            <MenuItem value="goerli">Goerli</MenuItem>
+            <MenuItem value="mumbai">Mumbai</MenuItem>
+            <MenuItem value="fuji">Fuji</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
       <TextField variant="standard" placeholder='Subject'  onChange={(e) => setSubject(e.target.value)} fullWidth />
       <TextField
           multiline
