@@ -52,7 +52,7 @@ function Mail({  chainName, pw3eContract,  walletAddress, setCurrentSection, set
   const messageToDecrypt = async (url) => {
     console.warn(url);
     try{
-      const chain = chainName === 'fuji' ? 'fuji': 'mumbai';
+      const chain = chainName;
       const authSig = await LitJsSdk.checkAndSignAuthMessage({chain});
       const accessControlConditions = [
         {
