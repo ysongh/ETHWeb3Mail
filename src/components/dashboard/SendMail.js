@@ -5,9 +5,9 @@ import { ethers } from 'ethers';
 import axios from "axios";
 
 import { blobToDataURI } from '../../helpers/convertMethods';
-import { FUJI_CONTRACT, MUMBAI_CONTRACT, PINATA_APIKEY, PINATA_SECRETAPIKEY } from '../../config';
+import { FUJI_CONTRACT, MUMBAI_CONTRACT, GOERLI_CONTRACT, PINATA_APIKEY, PINATA_SECRETAPIKEY } from '../../config';
 
-function SendMail({  openSnackbar, chainName, ethProvider, pw3eContract, walletAddress, domainData }) {
+function SendMail({  openSnackbar, chainName, ethProvider, pw3eContract }) {
   const [chain, setChain] = useState("");
   const [to, setTo] = useState("");
   const [subject, setSubject] = useState(false);
@@ -18,7 +18,7 @@ function SendMail({  openSnackbar, chainName, ethProvider, pw3eContract, walletA
   const sendMail = async () => {
     try{
       setLoading(true);
-      let toaddress;
+      let toaddress = to;
 
       if(to[0] !== '0'){
         toaddress = await ethProvider.resolveName(to);
@@ -40,12 +40,20 @@ function SendMail({  openSnackbar, chainName, ethProvider, pw3eContract, walletA
         recipient = FUJI_CONTRACT.slice(2);
         recipient = "0x000000000000000000000000" + recipient;
       }
+      else if (chain === 'goerli') {
+        destinationDomain = '5';
+        recipient = GOERLI_CONTRACT.slice(2);
+        recipient = "0x000000000000000000000000" + recipient;
+      }
 
       if (chainName === 'fuji') {
         chainId = "0xA869";
       }
       else if (chainName === 'mumbai') {
         chainId = "0x13881";
+      }
+      else if (chainName === 'goerli') {
+        chainId = "0x5";
       }
 
       const authSig = await LitJsSdk.checkAndSignAuthMessage({chain});
