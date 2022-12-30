@@ -19,6 +19,10 @@ contract EVMWeb3Mail {
         inbox = IInbox(_inbox);
     }
 
+    function sendMail(string calldata cid, address to) external {
+        emails[to].push(cid);
+    }
+
     function sendMailToOtherChain(
         uint32 _destinationDomain,
         bytes32 _recipient,
