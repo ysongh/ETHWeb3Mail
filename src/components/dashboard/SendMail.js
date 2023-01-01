@@ -7,7 +7,7 @@ import axios from "axios";
 import { blobToDataURI } from '../../helpers/convertMethods';
 import { FUJI_CONTRACT, MUMBAI_CONTRACT, GOERLI_CONTRACT, PINATA_APIKEY, PINATA_SECRETAPIKEY } from '../../config';
 
-function SendMail({  openSnackbar, chainName, ethProvider, pw3eContract }) {
+function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eContract }) {
   const [chain, setChain] = useState("");
   const [to, setTo] = useState("");
   const [subject, setSubject] = useState(false);
@@ -73,7 +73,13 @@ function SendMail({  openSnackbar, chainName, ethProvider, pw3eContract }) {
         }
       ]
       const dateNow = `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`;
-      const userData = JSON.stringify({ subject, text, dateNow });
+      const userData = JSON.stringify({ 
+        subject,
+        text,
+        from: walletAddress,
+        to,
+        dateNow
+       });
 
       // 1. Encryption
       // <Blob> encryptedString

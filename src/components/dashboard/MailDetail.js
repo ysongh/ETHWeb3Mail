@@ -31,7 +31,7 @@ function MailDetail({ currentMail, tableName, tablelandMethods, openSnackbar, se
         <div style={{ display: 'flex', justifyContent: "space-between" }}>
           <div>
             <h1 style={{ margin: "0"}}>{currentMail.subject}</h1>
-            {/* <p style={{ marginTop: "0", color: "gray", fontSize: ".8rem"}}>From: {currentMail.recipient}</p> */}
+            <p style={{ marginTop: "0", color: "gray", fontSize: ".8rem"}}>From: {currentMail.to}</p>
           </div>
          
           <p>{currentMail.dateNow}</p>
