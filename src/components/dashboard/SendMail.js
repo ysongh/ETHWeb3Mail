@@ -170,7 +170,7 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
       <br />
       <br />
       {!loading
-        ? <Button variant="contained" color="primary" size="large" onClick={sendMail} disabled={!to || !subject || !text} >
+        ? <Button variant="contained" color="primary" size="large" onClick={sendMail} disabled={!to || !subject || !text || !chain} >
             Send Mail
           </Button>
         : <LinearProgress color="primary" />
