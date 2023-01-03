@@ -31,13 +31,13 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
       let recipient;
       let chainId;
       if (chain === 'fuji') {
-        destinationDomain = '80001';
-        recipient = MUMBAI_CONTRACT.slice(2);
+        destinationDomain = '43113';
+        recipient = FUJI_CONTRACT.slice(2);
         recipient = "0x000000000000000000000000" + recipient;
       }
       else if (chain === 'mumbai') {
-        destinationDomain = '43113';
-        recipient = FUJI_CONTRACT.slice(2);
+        destinationDomain = '80001';
+        recipient = MUMBAI_CONTRACT.slice(2);
         recipient = "0x000000000000000000000000" + recipient;
       }
       else if (chain === 'goerli') {
