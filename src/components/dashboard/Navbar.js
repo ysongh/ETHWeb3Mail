@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom'
 import { AppBar, Toolbar, Chip, Button } from '@mui/material';
 
+import BasicMenu from "../common/BasicMenu"
 import { formatAddress } from "../../helpers/formatMethods";
 
 const drawerWidth = 200;
-
 
 function Navbar({ walletAddress, chainName, domainData }) {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ function Navbar({ walletAddress, chainName, domainData }) {
   const logout = async () => {
     navigate('/');
   }
-
+  
   return (
     <AppBar
       className="primary-bg-color-300"
@@ -31,6 +31,7 @@ function Navbar({ walletAddress, chainName, domainData }) {
             label={chainName} />
         </div>
         <div style={{ display: 'flex', alignItems: 'center'}}>
+          <BasicMenu />
           <Button variant="contained" color="error" onClick={logout}>
             Logout
           </Button>
