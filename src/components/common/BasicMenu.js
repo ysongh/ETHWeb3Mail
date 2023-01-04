@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Menu, MenuItem, IconButton } from '@mui/material';
+import { Menu, MenuItem, IconButton, Divider } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
-export default function BasicMenu() {
+export default function BasicMenu({ feeds }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -15,7 +15,7 @@ export default function BasicMenu() {
   };
 
   return (
-    <div>
+    <div style={{ marginRight: '1rem' }}>
       <IconButton onClick={openMenu}>
         <NotificationsIcon />
       </IconButton>
@@ -28,9 +28,11 @@ export default function BasicMenu() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={closeMenu}>Test 1</MenuItem>
-        <MenuItem onClick={closeMenu}>Test 2</MenuItem>
-        <MenuItem onClick={closeMenu}>Test 3</MenuItem>
+        <MenuItem style={{ marginRight: '3rem' }}>Your Notifications</MenuItem>
+        <Divider />
+        {feeds.map(f => (
+          <MenuItem key={f.sid}>- {f.message}</MenuItem>
+        ))}
       </Menu>
     </div>
   );

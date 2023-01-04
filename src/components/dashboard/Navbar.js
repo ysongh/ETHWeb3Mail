@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { AppBar, Toolbar, Chip, Button } from '@mui/material';
+import * as EpnsAPI from "@epnsproject/sdk-restapi";
 
 import BasicMenu from "../common/BasicMenu"
 import { formatAddress } from "../../helpers/formatMethods";
@@ -9,6 +10,22 @@ const drawerWidth = 200;
 
 function Navbar({ walletAddress, chainName, domainData }) {
   const navigate = useNavigate();
+
+  const [feeds, setFeeds] = useState([]);
+
+  useEffect(() => {
+    getFeeds()
+  }, [])
+  
+
+  const getFeeds = async () => {
+    const newFeeds = await EpnsAPI.user.getFeeds({
+      user: `eip155:5:${walletAddress}`, // channel address in CAIP
+      env: 'staging'
+    });
+
+    setFeeds(newFeeds);
+  }
 
   const logout = async () => {
     navigate('/');
@@ -31,7 +48,7 @@ function Navbar({ walletAddress, chainName, domainData }) {
             label={chainName} />
         </div>
         <div style={{ display: 'flex', alignItems: 'center'}}>
-          <BasicMenu />
+          <BasicMenu feeds={feeds} />
           <Button variant="contained" color="error" onClick={logout}>
             Logout
           </Button>
