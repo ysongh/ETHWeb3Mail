@@ -9,7 +9,7 @@ import EVMWeb3Mail from '../artifacts/contracts/EVMWeb3Mail.sol/EVMWeb3Mail.json
 import Spinner from '../components/common/Spinner';
 import {FUJI_CONTRACT, MUMBAI_CONTRACT, MOONBASE_CONTRACT, GOERLI_CONTRACT } from '../config';
 
-function Home({ setWalletAddress, setpw3eContract, setChainName, setethProvider }) {
+function Home({ setWalletAddress, setpw3eContract, setChainName, setethProvider, setethSigner }) {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
@@ -21,6 +21,7 @@ function Home({ setWalletAddress, setpw3eContract, setChainName, setethProvider 
     setethProvider(provider);
 
     const signer = provider.getSigner();
+    setethSigner(signer);
     const address = await signer.getAddress();
     setWalletAddress(address);
 

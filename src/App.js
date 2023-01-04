@@ -9,6 +9,7 @@ function App() {
   const [chainName, setChainName] = useState('');
   const [pw3eContract, setpw3eContract] = useState(null);
   const [ethProvider, setethProvider] = useState(null);
+  const [ethSigner, setethSigner] = useState(null); 
 
   return (
     <HashRouter>
@@ -20,7 +21,8 @@ function App() {
               chainName={chainName}
               walletAddress={walletAddress}
               pw3eContract={pw3eContract}
-              ethProvider={ethProvider} /> } />
+              ethProvider={ethProvider}
+              ethSigner={ethSigner} /> } />
         <Route
           path="/"
           element={
@@ -28,7 +30,8 @@ function App() {
               setWalletAddress={setWalletAddress}
               setpw3eContract={setpw3eContract}
               setChainName={setChainName}
-              setethProvider={setethProvider} /> } />
+              setethProvider={setethProvider}
+              setethSigner={setethSigner} /> } />
       </Routes>
     </HashRouter>
   );

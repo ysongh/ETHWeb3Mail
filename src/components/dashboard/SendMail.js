@@ -3,11 +3,12 @@ import { FormControl, InputLabel, Select, MenuItem, TextField, Button, LinearPro
 import LitJsSdk from 'lit-js-sdk';
 import { ethers } from 'ethers';
 import axios from "axios";
+import * as EpnsAPI from "@epnsproject/sdk-restapi";
 
 import { blobToDataURI } from '../../helpers/convertMethods';
-import { FUJI_CONTRACT, MUMBAI_CONTRACT, GOERLI_CONTRACT, PINATA_APIKEY, PINATA_SECRETAPIKEY } from '../../config';
+import { FUJI_CONTRACT, MUMBAI_CONTRACT, GOERLI_CONTRACT, PINATA_APIKEY, PINATA_SECRETAPIKEY, PUSH_CHANNEL_ADDRESS } from '../../config';
 
-function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eContract }) {
+function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eContract, ethSigner }) {
   const [chain, setChain] = useState("");
   const [to, setTo] = useState("");
   const [subject, setSubject] = useState(false);
@@ -132,8 +133,38 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
       const tx = await transaction.wait();
       console.log(tx);
       setTransaction(tx.hash);
+      //sendNotification(toaddress);
       openSnackbar();
       setLoading(false);
+    } catch(error) {
+      console.error(error);
+      setLoading(false);
+    }
+  }
+
+  const sendNotification = async (toaddress) => {
+    console.log(ethSigner);
+    try{
+      // apiResponse?.status === 204, if sent successfully!
+      const apiResponse = await EpnsAPI.payloads.sendNotification({
+        ethSigner,
+        type: 3, // target
+        identityType: 2, // direct payload
+        notification: {
+          title: `[SDK-TEST] notification TITLE:`,
+          body: `[sdk-test] notification BODY`
+        },
+        payload: {
+          title: `[sdk-test] payload title`,
+          body: `You got mail from ${walletAddress}`,
+          cta: '',
+          img: ''
+        },
+        recipients: `eip155:5:${toaddress}`, // recipient address
+        channel: `eip155:5:${PUSH_CHANNEL_ADDRESS}`, // your channel address
+        env: 'staging'
+      });
+      console.log(apiResponse);
     } catch(error) {
       console.error(error);
       setLoading(false);
