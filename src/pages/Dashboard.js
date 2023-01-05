@@ -7,6 +7,7 @@ import Sidebar from '../components/dashboard/Sidebar';
 import Mail from '../components/dashboard/Mail';
 import Send from '../components/dashboard/Send';
 import MailDetail from '../components/dashboard/MailDetail';
+import Setting from '../components/dashboard/Setting';
 
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -78,7 +79,8 @@ function Dashboard({ walletAddress, pw3eContract, chainName, ethProvider, ethSig
             setCurrentMail={setCurrentMail}
             isCopy="yes" /> }
         {currentSection === "Setting"
-          && <h1>Setting</h1> }
+          && <Setting 
+          walletAddress={walletAddress} /> }
       </Box>
       <Snackbar
         open={open}

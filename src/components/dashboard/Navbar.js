@@ -23,7 +23,6 @@ function Navbar({ walletAddress, chainName, domainData }) {
       user: `eip155:5:${walletAddress}`, // channel address in CAIP
       env: 'staging'
     });
-
     setFeeds(newFeeds);
   }
 
