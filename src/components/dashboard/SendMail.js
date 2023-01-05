@@ -133,7 +133,7 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
       const tx = await transaction.wait();
       console.log(tx);
       setTransaction(tx.hash);
-      //sendNotification(toaddress);
+      sendNotification(toaddress);
       openSnackbar();
       setLoading(false);
     } catch(error) {
@@ -143,11 +143,10 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
   }
 
   const sendNotification = async (toaddress) => {
-    console.log(ethSigner);
     try{
       // apiResponse?.status === 204, if sent successfully!
       const apiResponse = await EpnsAPI.payloads.sendNotification({
-        ethSigner,
+        signer: ethSigner,
         type: 3, // target
         identityType: 2, // direct payload
         notification: {
@@ -155,7 +154,7 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
           body: `[sdk-test] notification BODY`
         },
         payload: {
-          title: `[sdk-test] payload title`,
+          title: `EVM Email`,
           body: `You got mail from ${walletAddress}`,
           cta: '',
           img: ''
