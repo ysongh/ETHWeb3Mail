@@ -80,7 +80,8 @@ function Dashboard({ walletAddress, pw3eContract, chainName, ethProvider, ethSig
             isCopy="yes" /> }
         {currentSection === "Setting"
           && <Setting 
-          walletAddress={walletAddress} /> }
+            walletAddress={walletAddress}
+            ethSigner={ethSigner} /> }
       </Box>
       <Snackbar
         open={open}

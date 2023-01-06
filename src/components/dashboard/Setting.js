@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Divider } from '@mui/material';
+import { Divider, Button } from '@mui/material';
 import * as EpnsAPI from "@epnsproject/sdk-restapi";
 
-function Setting({ walletAddress }) {
+import { PUSH_CHANNEL_ADDRESS } from '../../config';
+
+function Setting({ walletAddress, ethSigner }) {
   const [subscriptions, setSubscriptions] = useState([]);
 
   useEffect(() => {
@@ -19,6 +21,26 @@ function Setting({ walletAddress }) {
     setSubscriptions(newSubscriptions);
   }
 
+  const optInToChannel = async () => {
+    try{
+      const apiResponse = await EpnsAPI.channels.subscribe({
+        signer: ethSigner,
+        channelAddress: `eip155:5:${PUSH_CHANNEL_ADDRESS}`, // channel address in CAIP
+        userAddress: `eip155:5:${walletAddress}`, // user address in CAIP
+        onSuccess: () => {
+         console.log('opt in success');
+        },
+        onError: () => {
+          console.error('opt in error');
+        },
+        env: 'staging'
+      })
+      console.log(apiResponse);
+    } catch(error) {
+      console.error(error);
+    }
+  }
+
   return (
     <div>
       <h1>Notification</h1>
@@ -28,6 +50,9 @@ function Setting({ walletAddress }) {
       {subscriptions.map((s, index) => (
         <p key={index}>- {s.channel}</p>
       ))}
+      <Button variant="contained" color="primary" size="large" onClick={optInToChannel}>
+        Opt In for Notification
+      </Button>
     </div>
   )
 }
