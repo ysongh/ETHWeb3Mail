@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Divider, Button } from '@mui/material';
+import { Switch, Divider, Button } from '@mui/material';
 import * as EpnsAPI from "@epnsproject/sdk-restapi";
 
 import { PUSH_CHANNEL_ADDRESS } from '../../config';
 
 function Setting({ walletAddress, ethSigner }) {
   const [subscriptions, setSubscriptions] = useState([]);
+  const [isOptIn, setIsOptIn] = useState(false);
 
   useEffect(() => {
     getSubscriptions();
@@ -18,7 +19,16 @@ function Setting({ walletAddress, ethSigner }) {
       env: 'staging'
     });
     console.log(newSubscriptions)
-    setSubscriptions(newSubscriptions);
+    setSubscriptions(newSubscriptions || []);
+    
+    if(newSubscriptions){
+      for(let c of newSubscriptions){
+        if(c.channel === PUSH_CHANNEL_ADDRESS){
+          setIsOptIn(true);
+          break;
+        }
+      }
+    }
   }
 
   const optInToChannel = async () => {
@@ -50,6 +60,7 @@ function Setting({ walletAddress, ethSigner }) {
       {subscriptions.map((s, index) => (
         <p key={index}>- {s.channel}</p>
       ))}
+      <Switch checked={isOptIn} />
       <Button variant="contained" color="primary" size="large" onClick={optInToChannel}>
         Opt In for Notification
       </Button>
