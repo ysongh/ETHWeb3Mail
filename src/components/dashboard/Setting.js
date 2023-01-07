@@ -23,7 +23,7 @@ function Setting({ walletAddress, ethSigner }) {
     
     if(newSubscriptions){
       for(let c of newSubscriptions){
-        if(c.channel === PUSH_CHANNEL_ADDRESS){
+        if(c.channel.toLowerCase() == PUSH_CHANNEL_ADDRESS.toLowerCase()){
           setIsOptIn(true);
           break;
         }
@@ -39,9 +39,31 @@ function Setting({ walletAddress, ethSigner }) {
         userAddress: `eip155:5:${walletAddress}`, // user address in CAIP
         onSuccess: () => {
          console.log('opt in success');
+         setIsOptIn(true);
         },
         onError: () => {
           console.error('opt in error');
+        },
+        env: 'staging'
+      })
+      console.log(apiResponse);
+    } catch(error) {
+      console.error(error);
+    }
+  }
+
+  const optOutToChannel = async () => {
+    try{
+      const apiResponse = await EpnsAPI.channels.unsubscribe({
+        signer: ethSigner,
+        channelAddress: `eip155:5:${PUSH_CHANNEL_ADDRESS}`, // channel address in CAIP
+        userAddress: `eip155:5:${walletAddress}`, // user address in CAIP
+        onSuccess: () => {
+         console.log('opt out success');
+         setIsOptIn(false);
+        },
+        onError: () => {
+          console.error('opt out error');
         },
         env: 'staging'
       })
@@ -61,9 +83,14 @@ function Setting({ walletAddress, ethSigner }) {
         <p key={index}>- {s.channel}</p>
       ))}
       <Switch checked={isOptIn} />
-      <Button variant="contained" color="primary" size="large" onClick={optInToChannel}>
-        Opt In for Notification
-      </Button>
+      {!isOptIn
+        ? <Button variant="contained" color="primary" size="large" onClick={optInToChannel}>
+            Opt In for Notification
+          </Button>
+        : <Button variant="contained" color="primary" size="large" onClick={optOutToChannel}>
+            Opt Out for Notification
+          </Button>
+      }
     </div>
   )
 }
