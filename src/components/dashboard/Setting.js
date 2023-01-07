@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Switch, Divider, Button } from '@mui/material';
+import { FormControlLabel, Switch, Divider } from '@mui/material';
 import * as EpnsAPI from "@epnsproject/sdk-restapi";
 
 import { PUSH_CHANNEL_ADDRESS } from '../../config';
@@ -29,6 +29,11 @@ function Setting({ walletAddress, ethSigner }) {
         }
       }
     }
+  }
+
+  const updateNotification = () => {
+    if(isOptIn) optOutToChannel();
+    else optInToChannel();
   }
 
   const optInToChannel = async () => {
@@ -82,15 +87,7 @@ function Setting({ walletAddress, ethSigner }) {
       {subscriptions.map((s, index) => (
         <p key={index}>- {s.channel}</p>
       ))}
-      <Switch checked={isOptIn} />
-      {!isOptIn
-        ? <Button variant="contained" color="primary" size="large" onClick={optInToChannel}>
-            Opt In for Notification
-          </Button>
-        : <Button variant="contained" color="primary" size="large" onClick={optOutToChannel}>
-            Opt Out for Notification
-          </Button>
-      }
+      <FormControlLabel control={<Switch checked={isOptIn} onChange={updateNotification} />} label={!isOptIn ? "Opt In for Notification" : "Opt Out for Notification"} />
     </div>
   )
 }
