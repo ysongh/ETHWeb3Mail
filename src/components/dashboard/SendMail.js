@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from "axios";
 import { FormControl, InputLabel, Select, MenuItem, TextField, Button, LinearProgress } from '@mui/material';
 import LitJsSdk from 'lit-js-sdk';
+import * as tus from 'tus-js-client';
 import * as EpnsAPI from "@epnsproject/sdk-restapi";
 
 import { blobToDataURI } from '../../helpers/convertMethods';
@@ -159,7 +160,7 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
 
       axios.request(options).then(function (response) {
         console.log(response);
-        setLoading(false);
+        uploadToLivepeer(newVideo, response.data.tusEndpoint)
       }).catch(function (error) {
         console.error(error);
         setLoading(false);
@@ -167,6 +168,37 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
 
     } catch(error) {
        console.error(error);
+    }
+  }
+
+  const uploadToLivepeer = async (newVideo, tusEndpoint) => {
+    try{
+      const upload = new tus.Upload(newVideo, {
+        endpoint: tusEndpoint, // URL from `tusEndpoint` field in the `/request-upload` response
+        metadata: {
+          filename: newVideo.name,
+          filetype: 'video/mp4',
+        },
+        uploadSize: newVideo.size,
+        onError(err) {
+          console.error('Error uploading file:', err);
+        },
+        onProgress(bytesUploaded, bytesTotal) {
+          const percentage = ((bytesUploaded / bytesTotal) * 100).toFixed(2);
+          console.log('Uploaded ' + percentage + '%');
+        },
+        onSuccess() {
+          console.log('Upload finished:', upload.url);
+        },
+      });
+      const previousUploads = await upload.findPreviousUploads();
+      if (previousUploads.length > 0) {
+       upload.resumeFromPreviousUpload(previousUploads[0]);
+      }
+      upload.start();
+      
+    } catch(error) {
+      console.error(error);
     }  
   }
 
