@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
+import axios from "axios";
 import { FormControl, InputLabel, Select, MenuItem, TextField, Button, LinearProgress } from '@mui/material';
 import LitJsSdk from 'lit-js-sdk';
-import { ethers } from 'ethers';
-import axios from "axios";
 import * as EpnsAPI from "@epnsproject/sdk-restapi";
 
 import { blobToDataURI } from '../../helpers/convertMethods';
-import { FUJI_CONTRACT, MUMBAI_CONTRACT, GOERLI_CONTRACT, PINATA_APIKEY, PINATA_SECRETAPIKEY, PUSH_CHANNEL_ADDRESS } from '../../config';
+import { FUJI_CONTRACT, MUMBAI_CONTRACT, GOERLI_CONTRACT, PINATA_APIKEY, PINATA_SECRETAPIKEY, PUSH_CHANNEL_ADDRESS, LIVEPEER_APIKEY } from '../../config';
 
 function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eContract, ethSigner }) {
   const [chain, setChain] = useState("");
@@ -142,6 +141,35 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
     }
   }
 
+  const uploadVideo = async () => {
+    try{
+      setLoading(true);
+      const options = {
+        method: 'POST',
+        url: 'https://livepeer.studio/api/asset/request-upload',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${LIVEPEER_APIKEY}`
+        },
+        data: {
+          name: subject,
+        }
+      };
+
+      axios.request(options).then(function (response) {
+        console.log(response);
+        setLoading(false);
+      }).catch(function (error) {
+        console.error(error);
+        setLoading(false);
+      });
+
+    } catch(error) {
+       console.error(error)
+       setLoading(false);
+    }  
+  }
+
   const sendNotification = async (toaddress) => {
     try{
       // apiResponse?.status === 204, if sent successfully!
@@ -200,7 +228,7 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
       <br />
       <br />
       {!loading
-        ? <Button variant="contained" color="primary" size="large" onClick={sendMail} disabled={!to || !subject || !text || !chain} >
+        ? <Button variant="contained" color="primary" size="large" onClick={uploadVideo} disabled={!to || !subject || !text || !chain} >
             Send Mail
           </Button>
         : <LinearProgress color="primary" />
