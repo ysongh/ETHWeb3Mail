@@ -141,9 +141,10 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
     }
   }
 
-  const uploadVideo = async () => {
+  const uploadVideo = async (event) => {
     try{
-      setLoading(true);
+      const newVideo = event.target.files[0];
+      console.log(newVideo);
       const options = {
         method: 'POST',
         url: 'https://livepeer.studio/api/asset/request-upload',
@@ -165,8 +166,7 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
       });
 
     } catch(error) {
-       console.error(error)
-       setLoading(false);
+       console.error(error);
     }  
   }
 
@@ -225,10 +225,16 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
           variant="standard"
           onChange={(e) => setText(e.target.value)}
         />
+      <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+        <label>Upload Video</label>
+        <input type='file' id='video' onChange={uploadVideo} style={{ marginTop: '2px' }} />
+      </FormControl>
+     
+
       <br />
       <br />
       {!loading
-        ? <Button variant="contained" color="primary" size="large" onClick={uploadVideo} disabled={!to || !subject || !text || !chain} >
+        ? <Button variant="contained" color="primary" size="large" onClick={sendMail} disabled={!to || !subject || !text || !chain} >
             Send Mail
           </Button>
         : <LinearProgress color="primary" />
