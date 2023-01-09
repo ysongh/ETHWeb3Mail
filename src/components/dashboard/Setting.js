@@ -83,10 +83,6 @@ function Setting({ walletAddress, ethSigner }) {
       <h1>Notification</h1>
       <Divider />
 
-      <h2>Subscriptions</h2>
-      {subscriptions.map((s, index) => (
-        <p key={index}>- {s.channel}</p>
-      ))}
       <FormControlLabel control={<Switch checked={isOptIn} onChange={updateNotification} />} label={!isOptIn ? "Opt In for Notification" : "Opt Out for Notification"} />
     </div>
   )
