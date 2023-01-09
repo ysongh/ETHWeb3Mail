@@ -1,5 +1,7 @@
 import React from 'react';
 import { Paper, IconButton } from '@mui/material';
+import { Player } from '@livepeer/react';
+
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -38,7 +40,16 @@ function MailDetail({ currentMail, tableName, tablelandMethods, openSnackbar, se
         </div>
         
         <p>{currentMail.text}</p>
-        <p>{currentMail.playbackId}</p>
+        {currentMail?.playbackId
+          && <div style={{ maxWidth: '600px' }}>
+              <Player
+                title="Test"
+                playbackId={currentMail.playbackId}
+                showPipButton
+                objectFit="cover"
+                priority
+              />
+            </div>}
       </Paper>
     </>
     

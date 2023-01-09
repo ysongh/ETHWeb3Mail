@@ -2,16 +2,12 @@ import React, { useState } from 'react';
 import axios from "axios";
 import { FormControl, InputLabel, Select, MenuItem, TextField, Button, LinearProgress } from '@mui/material';
 import LitJsSdk from 'lit-js-sdk';
-import { LivepeerConfig, Player, createReactClient, studioProvider } from '@livepeer/react';
+import { Player } from '@livepeer/react';
 import * as tus from 'tus-js-client';
 import * as EpnsAPI from "@epnsproject/sdk-restapi";
 
 import { blobToDataURI } from '../../helpers/convertMethods';
 import { FUJI_CONTRACT, MUMBAI_CONTRACT, GOERLI_CONTRACT, PINATA_APIKEY, PINATA_SECRETAPIKEY, PUSH_CHANNEL_ADDRESS, LIVEPEER_APIKEY } from '../../config';
-
-const client = createReactClient({
-  provider: studioProvider({ apiKey: LIVEPEER_APIKEY }),
-});
 
 function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eContract, ethSigner }) {
   const [chain, setChain] = useState("");
@@ -271,15 +267,16 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
         <input type='file' id='video' onChange={uploadVideo} style={{ marginTop: '2px' }} />
       </FormControl>
      
-      <LivepeerConfig client={client}>
-        {playbackId && <Player
-          title="Test"
-          playbackId={playbackId}
-          showPipButton
-          objectFit="cover"
-          priority
-        />}
-      </LivepeerConfig>
+      {playbackId
+        &&  <div style={{ maxWidth: '600px' }}>
+              <Player
+                title="Test"
+                playbackId={playbackId}
+                showPipButton
+                objectFit="cover"
+                priority
+              />
+            </div>}
 
       <br />
       <br />
