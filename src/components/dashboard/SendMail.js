@@ -2,11 +2,16 @@ import React, { useState } from 'react';
 import axios from "axios";
 import { FormControl, InputLabel, Select, MenuItem, TextField, Button, LinearProgress } from '@mui/material';
 import LitJsSdk from 'lit-js-sdk';
+import { LivepeerConfig, Player, createReactClient, studioProvider } from '@livepeer/react';
 import * as tus from 'tus-js-client';
 import * as EpnsAPI from "@epnsproject/sdk-restapi";
 
 import { blobToDataURI } from '../../helpers/convertMethods';
 import { FUJI_CONTRACT, MUMBAI_CONTRACT, GOERLI_CONTRACT, PINATA_APIKEY, PINATA_SECRETAPIKEY, PUSH_CHANNEL_ADDRESS, LIVEPEER_APIKEY } from '../../config';
+
+const client = createReactClient({
+  provider: studioProvider({ apiKey: LIVEPEER_APIKEY }),
+});
 
 function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eContract, ethSigner }) {
   const [chain, setChain] = useState("");
@@ -15,6 +20,7 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
   const [text, setText] = useState(false);
   const [loading, setLoading] = useState(false); 
   const [transaction, setTransaction] = useState('');
+  const [playbackId, setPlaybackId] = useState('');
 
   const sendMail = async () => {
     try{
@@ -25,7 +31,7 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
         toaddress = await ethProvider.resolveName(to);
       }
 
-      if(toaddress === null) return;
+      if(!toaddress) return;
       if(chain === "") return;
 
       let destinationDomain;
@@ -79,7 +85,8 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
         text,
         from: walletAddress,
         to,
-        dateNow
+        dateNow,
+        playbackId
        });
 
       // 1. Encryption
@@ -161,7 +168,7 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
       axios.request(options).then(function (response) {
         console.log(response);
         uploadToLivepeer(newVideo, response.data.tusEndpoint)
-      }).catch(function (error) {
+      }).catch(error => {
         console.error(error);
         setLoading(false);
       });
@@ -189,6 +196,8 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
         },
         onSuccess() {
           console.log('Upload finished:', upload.url);
+          const newPlaybackId = upload.url.split("/");
+          setPlaybackId(newPlaybackId[8]);
         },
       });
       const previousUploads = await upload.findPreviousUploads();
@@ -262,6 +271,15 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
         <input type='file' id='video' onChange={uploadVideo} style={{ marginTop: '2px' }} />
       </FormControl>
      
+      <LivepeerConfig client={client}>
+        {playbackId && <Player
+          title="Test"
+          playbackId={playbackId}
+          showPipButton
+          objectFit="cover"
+          priority
+        />}
+      </LivepeerConfig>
 
       <br />
       <br />

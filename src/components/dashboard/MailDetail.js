@@ -38,6 +38,7 @@ function MailDetail({ currentMail, tableName, tablelandMethods, openSnackbar, se
         </div>
         
         <p>{currentMail.text}</p>
+        <p>{currentMail.playbackId}</p>
       </Paper>
     </>
     
