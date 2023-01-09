@@ -17,21 +17,6 @@ function Mail({  chainName, pw3eContract,  walletAddress, setCurrentSection, set
   const loadMails = async () => {
     try{
       setLoading(true);
-      // const readRes = await tablelandMethods.read(`SELECT * FROM ${tableName} WHERE isCopy='${isCopy}';`);
-      // console.warn(readRes);
-
-      // const entries = resultsToObjects(readRes);
-      // let temp = [];
-
-      // for (const { recipient, body, id, dateSent } of entries) {
-      //   console.log(`${body}: ${id}`);
-      //   const strData = await messageToDecrypt(body);
-      //   const toObject = await JSON.parse(strData);
-      //   temp.unshift({ id, data: toObject, recipient, dateSent});
-      // }
-
-      // setMails(temp);
-      // setMailCount(temp.length);
       
       const newMails = await pw3eContract.getUserEmails(walletAddress);
       const decryptedMails = [];

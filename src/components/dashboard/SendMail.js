@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import { FormControl, InputLabel, Select, MenuItem, TextField, Button, LinearProgress } from '@mui/material';
 import LitJsSdk from 'lit-js-sdk';
@@ -7,6 +7,7 @@ import * as tus from 'tus-js-client';
 import * as EpnsAPI from "@epnsproject/sdk-restapi";
 
 import { blobToDataURI } from '../../helpers/convertMethods';
+import { formatAddress } from '../../helpers/formatMethods';
 import { FUJI_CONTRACT, MUMBAI_CONTRACT, GOERLI_CONTRACT, PINATA_APIKEY, PINATA_SECRETAPIKEY, PUSH_CHANNEL_ADDRESS, LIVEPEER_APIKEY } from '../../config';
 
 function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eContract, ethSigner }) {
@@ -220,7 +221,7 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
         },
         payload: {
           title: `EVM Email`,
-          body: `You got mail from ${walletAddress}`,
+          body: `You got mail from ${formatAddress(walletAddress)}`,
           cta: '',
           img: ''
         },
