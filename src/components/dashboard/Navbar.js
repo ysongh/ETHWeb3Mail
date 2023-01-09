@@ -2,13 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { AppBar, Toolbar, Chip, Button } from '@mui/material';
 import * as EpnsAPI from "@epnsproject/sdk-restapi";
+import UAuth from '@uauth/js';
 
+import { UNSTOPPABLEDOMAINS_CLIENTID, UNSTOPPABLEDOMAINS_REDIRECT_URI } from '../../config';
 import BasicMenu from "../common/BasicMenu"
 import { formatAddress } from "../../helpers/formatMethods";
 
 const drawerWidth = 200;
 
-function Navbar({ walletAddress, chainName, domainData }) {
+const uauth = new UAuth({
+  clientID: UNSTOPPABLEDOMAINS_CLIENTID,
+  redirectUri: UNSTOPPABLEDOMAINS_REDIRECT_URI,
+});
+
+function Navbar({ walletAddress, chainName, domainData, setDomainData }) {
   const navigate = useNavigate();
 
   const [feeds, setFeeds] = useState([]);
@@ -27,6 +34,11 @@ function Navbar({ walletAddress, chainName, domainData }) {
   }
 
   const logout = async () => {
+    if(domainData){
+      setDomainData(null);
+      await uauth.logout();
+    }
+
     navigate('/');
   }
   

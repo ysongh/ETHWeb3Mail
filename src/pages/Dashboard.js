@@ -18,7 +18,7 @@ const client = createReactClient({
   provider: studioProvider({ apiKey: LIVEPEER_APIKEY }),
 });
 
-function Dashboard({ walletAddress, pw3eContract, chainName, ethProvider, ethSigner }) {
+function Dashboard({ walletAddress, pw3eContract, chainName, ethProvider, ethSigner, domainData, setDomainData }) {
   const navigate = useNavigate();
 
   const [currentSection, setCurrentSection] = useState("All Mail");
@@ -44,7 +44,9 @@ function Dashboard({ walletAddress, pw3eContract, chainName, ethProvider, ethSig
         <CssBaseline />
         <Navbar
           walletAddress={walletAddress}
-          chainName={chainName} />
+          chainName={chainName}
+          domainData={domainData}
+          setDomainData={setDomainData}  />
         <Sidebar currentSection={currentSection} setCurrentSection={setCurrentSection} />
         <Box
           className="primary-bg-color-200"

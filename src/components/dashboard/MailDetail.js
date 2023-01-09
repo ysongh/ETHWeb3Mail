@@ -9,10 +9,10 @@ import { formatAddress } from "../../helpers/formatMethods";
 
 function MailDetail({ currentMail, tableName, tablelandMethods, openSnackbar, setCurrentSection }) {
   const deleteMail = async () => {
-    const removeRes = await tablelandMethods.write(`DELETE FROM ${tableName} WHERE id = ${currentMail.id};`);
-    console.log(removeRes);
-    openSnackbar();
-    setCurrentSection("All Mail");
+    // const removeRes = await tablelandMethods.write(`DELETE FROM ${tableName} WHERE id = ${currentMail.id};`);
+    // console.log(removeRes);
+    // openSnackbar();
+    // setCurrentSection("All Mail");
   }
 
   return (

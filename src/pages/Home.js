@@ -4,11 +4,17 @@ import { Container, Card, CardContent, Divider, Button } from '@mui/material';
 import { ethers } from 'ethers';
 import CoinbaseWalletSDK from '@coinbase/wallet-sdk';
 import Web3Modal from 'web3modal';
+import UAuth from '@uauth/js';
 import LitJsSdk from 'lit-js-sdk';
 
 import EVMWeb3Mail from '../artifacts/contracts/EVMWeb3Mail.sol/EVMWeb3Mail.json';
 import Spinner from '../components/common/Spinner';
-import {FUJI_CONTRACT, MUMBAI_CONTRACT, MOONBASE_CONTRACT, GOERLI_CONTRACT, INFURA_KEY } from '../config';
+import { FUJI_CONTRACT, MUMBAI_CONTRACT, MOONBASE_CONTRACT, GOERLI_CONTRACT, INFURA_KEY, UNSTOPPABLEDOMAINS_CLIENTID, UNSTOPPABLEDOMAINS_REDIRECT_URI } from '../config';
+
+const uauth = new UAuth({
+  clientID: UNSTOPPABLEDOMAINS_CLIENTID,
+  redirectUri: UNSTOPPABLEDOMAINS_REDIRECT_URI,
+});
 
 const providerOptions = {
   coinbasewallet: {
@@ -23,10 +29,38 @@ const web3Modal = new Web3Modal({
   providerOptions
 });
 
-function Home({ setWalletAddress, setpw3eContract, setChainName, setethProvider, setethSigner }) {
+function Home({ setWalletAddress, setpw3eContract, setChainName, setethProvider, setethSigner, setDomainData }) {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    uauth
+      .user()
+      .then(userData => {
+        console.log(userData);
+        setDomainData(userData);
+        connectWallet();
+      })
+      .catch(error => {
+        console.error('profile error:', error);
+      })
+  }, [])
+
+  const loginWithUnstoppableDomains = async () => {
+    try {
+      setLoading(true);
+      const authorization = await uauth.loginWithPopup();
+      authorization.sub = authorization.idToken.sub;
+      console.log(authorization);
+
+      setDomainData(authorization);
+      connectWallet();
+    } catch (error) {
+      setLoading(false);
+      console.error(error);
+    }
+  }
 
   const connectWallet = async () => {
     const connection = await web3Modal.connect();
@@ -97,6 +131,11 @@ function Home({ setWalletAddress, setpw3eContract, setChainName, setethProvider,
               : <>
                 <Button variant="contained" color="primary" onClick={connectWallet} fullWidth>
                   Wallet
+                </Button>
+                <br />
+                <br />
+                <Button variant="contained" color="primary" onClick={loginWithUnstoppableDomains} fullWidth>
+                  Unstoppable Domain
                 </Button>
               </>
             }
