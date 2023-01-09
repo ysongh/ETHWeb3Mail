@@ -2,12 +2,26 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Card, CardContent, Divider, Button } from '@mui/material';
 import { ethers } from 'ethers';
+import CoinbaseWalletSDK from '@coinbase/wallet-sdk';
 import Web3Modal from 'web3modal';
 import LitJsSdk from 'lit-js-sdk';
 
 import EVMWeb3Mail from '../artifacts/contracts/EVMWeb3Mail.sol/EVMWeb3Mail.json';
 import Spinner from '../components/common/Spinner';
-import {FUJI_CONTRACT, MUMBAI_CONTRACT, MOONBASE_CONTRACT, GOERLI_CONTRACT } from '../config';
+import {FUJI_CONTRACT, MUMBAI_CONTRACT, MOONBASE_CONTRACT, GOERLI_CONTRACT, INFURA_KEY } from '../config';
+
+const providerOptions = {
+  coinbasewallet: {
+    package: CoinbaseWalletSDK, 
+    options: {
+      appName: "EVMWeb3Mail",
+      infuraId: INFURA_KEY
+    }
+  }
+}
+const web3Modal = new Web3Modal({
+  providerOptions
+});
 
 function Home({ setWalletAddress, setpw3eContract, setChainName, setethProvider, setethSigner }) {
   const navigate = useNavigate();
@@ -15,7 +29,6 @@ function Home({ setWalletAddress, setpw3eContract, setChainName, setethProvider,
   const [loading, setLoading] = useState(false);
 
   const connectWallet = async () => {
-    const web3Modal = new Web3Modal();
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);  
     setethProvider(provider);
@@ -83,7 +96,7 @@ function Home({ setWalletAddress, setpw3eContract, setChainName, setethProvider,
               ? <Spinner />
               : <>
                 <Button variant="contained" color="primary" onClick={connectWallet} fullWidth>
-                  MetaMask
+                  Wallet
                 </Button>
               </>
             }
