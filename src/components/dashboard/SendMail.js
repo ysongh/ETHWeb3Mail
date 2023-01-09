@@ -132,7 +132,7 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
         params: [{ chainId: chainId }]
       });
 
-      const transaction = await pw3eContract.sendMail(destinationDomain, recipient, url, toaddress);
+      const transaction = await pw3eContract.sendMailToOtherChain(destinationDomain, recipient, url, toaddress);
       const tx = await transaction.wait();
       console.log(tx);
       setTransaction(tx.hash);

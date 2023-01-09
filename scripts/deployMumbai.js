@@ -10,9 +10,10 @@ async function main() {
   // For Mumbai
   const Outbox_Mumbai = "0xe17c37212d785760E8331D4A4395B17b34Ba8cDF";
   const Inboxes_Fuji_Mumbai = "0x04268B83eE9684F8767eB4e83cf7fBb7B86Ed597";
+  const Inboxes_Goerli_Mumbai = "0x666a24F62f7A97BA33c151776Eb3D9441a059eB8";
 
   const EVMWeb3Mail = await hre.ethers.getContractFactory("EVMWeb3Mail");
-  const eVMWeb3Mail = await EVMWeb3Mail.deploy(Outbox_Mumbai, Inboxes_Fuji_Mumbai);
+  const eVMWeb3Mail = await EVMWeb3Mail.deploy(Outbox_Mumbai, Inboxes_Goerli_Mumbai);
 
   await eVMWeb3Mail.deployed();
 

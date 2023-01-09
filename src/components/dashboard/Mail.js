@@ -115,7 +115,7 @@ function Mail({  chainName, pw3eContract,  walletAddress, setCurrentSection, set
               <Paper key={m.id} style={{ display: 'flex', justifyContent: "space-between" ,padding: '0 1rem', marginBottom: '1rem', cursor: "pointer" }} onClick={() => selectMail(m)}>
                 <div style={{ display: 'flex' }}>
                   <Checkbox />
-                  {/* <p style={{ color: 'grey', marginRight: '.5rem' }}>{formatAddress(m.recipient)} - </p> */}
+                  <p style={{ color: 'grey', marginRight: '.5rem' }}>{formatAddress(m.to)} - </p>
                   <p>{m.subject}</p>
                 </div>
                 <p>{m.dateNow}</p>
