@@ -66,7 +66,7 @@ function Home({ setWalletAddress, setpw3eContract, setChainName, setethProvider,
       setpw3eContract(contract);
     }
     
-    await connectToLitNetwork();
+    //await connectToLitNetwork();
     navigate('./dashboard');
   }
 
