@@ -60,7 +60,6 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
         chainId = "0x5";
       }
 
-      /*
       const authSig = await LitJsSdk.checkAndSignAuthMessage({chain});
       const accessControlConditions = [
         {
@@ -115,26 +114,6 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
         null,
         2
       )], 'metadata.json');
-      */
-
-      const dateNow = `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`;
-      const emailData = JSON.stringify({ 
-        subject,
-        text,
-        from: walletAddress,
-        to,
-        dateNow,
-        playbackId
-       });
-
-      const prepareToUpload = new File(
-        [JSON.stringify(
-          {
-            emailData
-          },
-          null,
-          1
-        )], 'metadata.json');
 
       let data = new FormData();
       data.append('file', prepareToUpload);
@@ -149,10 +128,10 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
       let url = "https://gateway.pinata.cloud/ipfs/" + res.data.IpfsHash;
       console.log(url);
 
-      // await window.ethereum.request({
-      //   method: 'wallet_switchEthereumChain',
-      //   params: [{ chainId: chainId }]
-      // });
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: chainId }]
+      });
 
       const transaction = await pw3eContract.sendMailToOtherChain(destinationDomain, recipient, url, toaddress);
       const tx = await transaction.wait();

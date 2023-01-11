@@ -63,6 +63,7 @@ function Home({ setWalletAddress, setpw3eContract, setChainName, setethProvider,
   }
 
   const connectWallet = async () => {
+    const web3Modal = new Web3Modal();
     const connection = await web3Modal.connect();
     const provider = new ethers.providers.Web3Provider(connection);  
     setethProvider(provider);
@@ -100,7 +101,7 @@ function Home({ setWalletAddress, setpw3eContract, setChainName, setethProvider,
       setpw3eContract(contract);
     }
     
-    //await connectToLitNetwork();
+    await connectToLitNetwork();
     navigate('./dashboard');
   }
 

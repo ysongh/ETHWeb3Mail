@@ -21,12 +21,8 @@ function Mail({  chainName, pw3eContract,  walletAddress, setCurrentSection, set
       const newMails = await pw3eContract.getUserEmails(walletAddress);
       const decryptedMails = [];
       for(let m of newMails) {
-        let data = await fetch(m);
-        data = await data.json();
-        console.log(data);
-
-        // const strData = await messageToDecrypt(m);
-        const toObject = await JSON.parse(data.emailData);
+        const strData = await messageToDecrypt(m);
+        const toObject = await JSON.parse(strData);
         decryptedMails.push(toObject);
       }
       setMails(decryptedMails);
