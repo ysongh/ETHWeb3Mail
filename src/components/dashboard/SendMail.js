@@ -244,7 +244,10 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
         <TextField variant="standard" placeholder='To'  onChange={(e) => setTo(e.target.value)} fullWidth />
         <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
           <Select
+            className={!chain && "grey"}
             label="Chain"
+            defaultValue=""
+            displayEmpty
             onChange={(e) => setChain(e.target.value)}
           >
             <MenuItem disabled value="">
