@@ -79,6 +79,7 @@ function Dashboard({ walletAddress, pw3eContract, chainName, ethProvider, ethSig
           {currentSection === "Mail Detail"
             && <MailDetail
               currentMail={currentMail}
+              ethProvider={ethProvider}
               openSnackbar={openSnackbar}
               setCurrentSection={setCurrentSection} /> }
           {currentSection === "My Send Mail"

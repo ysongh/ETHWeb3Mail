@@ -1,5 +1,5 @@
-import React from 'react';
-import { Paper, IconButton } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Paper, Avatar, IconButton } from '@mui/material';
 import { Player } from '@livepeer/react';
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -7,7 +7,22 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import { formatAddress } from "../../helpers/formatMethods";
 
-function MailDetail({ currentMail, tableName, tablelandMethods, openSnackbar, setCurrentSection }) {
+function MailDetail({ currentMail, ethProvider, tablelandMethods, openSnackbar, setCurrentSection }) {
+  const [fromAddress, setFromAddress] = useState("");
+  const [fromURL, setFromURL] = useState("");
+  
+  useEffect(() => {
+    if(currentMail.to[0] !== '0') resolveENS();
+  }, [])
+  
+  const resolveENS = async () => {
+    const resolver = await ethProvider.getResolver(currentMail.to);
+    if(!resolver) return;
+    setFromAddress(resolver.address)
+    const avatar = await resolver.getText("avatar");
+    setFromURL(avatar);
+  }
+
   const deleteMail = async () => {
     // const removeRes = await tablelandMethods.write(`DELETE FROM ${tableName} WHERE id = ${currentMail.id};`);
     // console.log(removeRes);
@@ -32,10 +47,13 @@ function MailDetail({ currentMail, tableName, tablelandMethods, openSnackbar, se
       </Paper>
 
       <Paper style={{ padding: "1rem" }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <Avatar alt={currentMail.to} src={fromURL} />
+          <p style={{ marginLeft: ".5rem", color: "gray", fontSize: ".8rem"}}>{formatAddress(currentMail.to)}</p>
+        </div>
         <div style={{ display: 'flex', justifyContent: "space-between" }}>
           <div>
             <h1 style={{ margin: "0"}}>{currentMail.subject}</h1>
-            <p style={{ marginTop: "0", color: "gray", fontSize: ".8rem"}}>From: {formatAddress(currentMail.to)}</p>
           </div>
          
           <p>{currentMail.dateNow}</p>

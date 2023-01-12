@@ -28,8 +28,6 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
         const resolver = await ethProvider.getResolver(to);
         if(!resolver) return;
         toaddress = resolver.address;
-        const avatar = await resolver.getText("avatar");
-        console.log(toaddress, avatar)
       }
 
       if(!toaddress) return;
