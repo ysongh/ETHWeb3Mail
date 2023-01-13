@@ -13,6 +13,7 @@ contract EVMWeb3Mail {
 
     event ReceivedMessage(uint32 origin, bytes32 sender, address to);
     event SentMessage(uint32 destinationDomain, bytes32 recipient, address to);
+    event NewEmail(address indexed to, string cid);
 
     constructor(address _outbox, address _inbox) {
         outbox = IOutbox(_outbox);
@@ -21,6 +22,7 @@ contract EVMWeb3Mail {
 
     function sendMail(string calldata cid, address to) external {
         emails[to].push(cid);
+        emit NewEmail(to, cid);
     }
 
     function sendMailToOtherChain(
@@ -53,6 +55,7 @@ contract EVMWeb3Mail {
       lastSender = _sender;
       emails[to].push(cid);
       emit ReceivedMessage(_origin, _sender, to);
+      emit NewEmail(to, cid);
     }
 
     function getUserEmails(address _to) external view returns (string[] memory) {
