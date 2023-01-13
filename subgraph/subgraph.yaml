@@ -1,0 +1,26 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: EVMWeb3Mail
+    network: goerli
+    source:
+      address: "0x0A3621D2De168b4592A0904290EB3C7AF7E5a845"
+      abi: EVMWeb3Mail
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - ReceivedMessage
+        - SentMessage
+      abis:
+        - name: EVMWeb3Mail
+          file: ./abis/EVMWeb3Mail.json
+      eventHandlers:
+        - event: ReceivedMessage(uint32,bytes32,address)
+          handler: handleReceivedMessage
+        - event: SentMessage(uint32,bytes32,address)
+          handler: handleSentMessage
+      file: ./src/evm-web-3-mail.ts
