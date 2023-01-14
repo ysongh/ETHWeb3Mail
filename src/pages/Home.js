@@ -100,6 +100,10 @@ function Home({ setWalletAddress, setpw3eContract, setChainName, setethProvider,
       setChainName("goerli");
       setpw3eContract(contract);
     }
+    else {
+      alert("Network not supported. Please try Goerli or Mumbai");
+      return;
+    }
     
     await connectToLitNetwork();
     navigate('./dashboard');
