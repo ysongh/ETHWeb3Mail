@@ -8,7 +8,6 @@ contract EVMWeb3Mail {
     IOutbox outbox;
     IInbox inbox;
     
-    bytes32 public lastSender;
     mapping(address => string[]) public emails;
 
     event ReceivedMessage(uint32 origin, bytes32 sender, address to);
@@ -52,7 +51,6 @@ contract EVMWeb3Mail {
                 _payload,
                 (string, address)
             );
-      lastSender = _sender;
       emails[to].push(cid);
       emit ReceivedMessage(_origin, _sender, to);
       emit NewEmail(to, cid);
