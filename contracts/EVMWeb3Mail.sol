@@ -8,7 +8,8 @@ contract EVMWeb3Mail {
     IOutbox outbox;
     IInbox inbox;
     
-    mapping(address => string[]) public emails;
+    mapping(address => string[]) public receiveEmails;
+    mapping(address => string[]) public sentEmails;
 
     event ReceivedMessage(uint32 origin, bytes32 sender, address to);
     event SentMessage(uint32 destinationDomain, bytes32 recipient, address to);
@@ -20,7 +21,8 @@ contract EVMWeb3Mail {
     }
 
     function sendMail(string calldata cid, address to) external {
-        emails[to].push(cid);
+        receiveEmails[to].push(cid);
+        sentEmails[msg.sender].push(cid);
         emit NewEmail(to, cid);
     }
 
@@ -30,9 +32,11 @@ contract EVMWeb3Mail {
         string calldata cid,
         address to
     ) external {
+        address from = msg.sender;
         bytes memory payload = abi.encode(
             cid, 
-            to
+            to,
+            from
         );
 
         outbox.dispatch(_destinationDomain, _recipient, payload);
@@ -46,17 +50,23 @@ contract EVMWeb3Mail {
     ) external {
         (
             string memory cid,
-            address to
+            address to,
+            address from
         ) = abi.decode(
                 _payload,
-                (string, address)
+                (string, address, address)
             );
-      emails[to].push(cid);
-      emit ReceivedMessage(_origin, _sender, to);
-      emit NewEmail(to, cid);
+        receiveEmails[to].push(cid);
+        sentEmails[from].push(cid);
+        emit ReceivedMessage(_origin, _sender, to);
+        emit NewEmail(to, cid);
     }
 
     function getUserEmails(address _to) external view returns (string[] memory) {
-        return emails[_to];
+        return receiveEmails[_to];
+    }
+
+    function getSentEmails(address _to) external view returns (string[] memory) {
+        return sentEmails[_to];
     }
 }
