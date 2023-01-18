@@ -63,7 +63,7 @@ function Dashboard({ walletAddress, pw3eContract, chainName, ethProvider, ethSig
               pw3eContract={pw3eContract}
               setCurrentSection={setCurrentSection}
               setCurrentMail={setCurrentMail}
-              isCopy="no" /> }
+              isMySend="no" /> }
           {currentSection === "Message"
             && <p>Message</p> }
           {currentSection === "Send"
@@ -84,11 +84,13 @@ function Dashboard({ walletAddress, pw3eContract, chainName, ethProvider, ethSig
               setCurrentSection={setCurrentSection} /> }
           {currentSection === "My Send Mail"
             && <Mail
+              chainName={chainName}
               setMailCount={setMailCount}
               walletAddress={walletAddress}
+              pw3eContract={pw3eContract}
               setCurrentSection={setCurrentSection}
               setCurrentMail={setCurrentMail}
-              isCopy="yes" /> }
+              isMySend="yes" /> }
           {currentSection === "Setting"
             && <Setting 
               walletAddress={walletAddress}

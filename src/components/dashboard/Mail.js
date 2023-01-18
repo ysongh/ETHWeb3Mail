@@ -6,7 +6,7 @@ import SkeletonPlaceholder from '../common/SkeletonPlaceholder';
 import { dataURItoBlob } from '../../helpers/convertMethods';
 import { formatAddress } from "../../helpers/formatMethods";
 
-function Mail({  chainName, pw3eContract,  walletAddress, setCurrentSection, setCurrentMail, isCopy }) {
+function Mail({  chainName, pw3eContract,  walletAddress, setCurrentSection, setCurrentMail, isMySend }) {
   const [mails, setMails] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -18,7 +18,9 @@ function Mail({  chainName, pw3eContract,  walletAddress, setCurrentSection, set
     try{
       setLoading(true);
       
-      const newMails = await pw3eContract.getUserEmails(walletAddress);
+      let newMails;
+      if(isMySend) newMails = await pw3eContract.getUserEmails(walletAddress);
+      else newMails = await pw3eContract.getSentEmails(walletAddress);
       const decryptedMails = [];
       for(let m of newMails) {
         const strData = await messageToDecrypt(m);
