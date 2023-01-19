@@ -47,15 +47,15 @@ function MailDetail({ currentMail, ethProvider, tablelandMethods, openSnackbar, 
       </Paper>
 
       <Paper style={{ padding: "1rem" }}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <Avatar alt={currentMail.to} src={fromURL} />
-          <p style={{ marginLeft: ".5rem", color: "gray", fontSize: ".8rem"}}>{formatAddress(currentMail.to)}</p>
+        <div>
+          <h1 style={{ margin: "0"}}>{currentMail.subject}</h1>
         </div>
+        
         <div style={{ display: 'flex', justifyContent: "space-between" }}>
-          <div>
-            <h1 style={{ margin: "0"}}>{currentMail.subject}</h1>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Avatar alt={currentMail.to} src={fromURL} />
+            <p style={{ marginLeft: ".5rem", color: "gray", fontSize: ".8rem"}}>{formatAddress(currentMail.to)}</p>
           </div>
-         
           <p>{currentMail.dateNow}</p>
         </div>
         
