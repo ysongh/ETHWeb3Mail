@@ -134,11 +134,18 @@ function SendMail({  openSnackbar, chainName, ethProvider, walletAddress, pw3eCo
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: chainId }]
       });
-
-      const transaction = await pw3eContract.sendMailToOtherChain(destinationDomain, recipient, url, toaddress);
-      const tx = await transaction.wait();
-      console.log(tx);
-      setTransaction(tx.transactionHash);
+      
+      if(chainName === chain) {
+        const transaction = await pw3eContract.sendMail(url, toaddress);
+        const tx = await transaction.wait();
+        setTransaction(tx.transactionHash);
+      }
+      else {
+        const transaction = await pw3eContract.sendMailToOtherChain(destinationDomain, recipient, url, toaddress);
+        const tx = await transaction.wait();
+        setTransaction(tx.transactionHash);
+      }
+      
       //sendNotification(toaddress);
       openSnackbar();
       setLoading(false);
