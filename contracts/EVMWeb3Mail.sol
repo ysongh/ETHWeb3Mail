@@ -40,13 +40,11 @@ contract EVMWeb3Mail {
         string calldata cid,
         address to
     ) external {
-        address from = msg.sender;
         bytes memory payload = abi.encode(
             cid, 
-            to,
-            from
+            to
         );
-
+        sentEmails[msg.sender].push(cid);
         outbox.dispatch(_destinationDomain, _recipient, payload);
         emit SentMessage(_destinationDomain, _recipient, to);
     }
@@ -58,14 +56,13 @@ contract EVMWeb3Mail {
     ) external {
         (
             string memory cid,
-            address to,
-            address from
+            address to
         ) = abi.decode(
                 _payload,
-                (string, address, address)
+                (string, address)
             );
         receiveEmails[to].push(cid);
-        sentEmails[from].push(cid);
+        
         emit ReceivedMessage(_origin, _sender, to);
         emit NewEmail(to, cid);
     }
