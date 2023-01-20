@@ -26,6 +26,14 @@ contract EVMWeb3Mail {
         emit NewEmail(to, cid);
     }
 
+    function removeReceiveEmailByID(uint id, address to) external {
+        delete receiveEmails[to][id];
+    }
+
+    function removeSentEmailByID(uint id, address to) external {
+        delete sentEmails[to][id];
+    }
+
     function sendMailToOtherChain(
         uint32 _destinationDomain,
         bytes32 _recipient,
